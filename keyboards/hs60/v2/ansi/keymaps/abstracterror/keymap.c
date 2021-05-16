@@ -22,6 +22,7 @@
 // Layer names
 #define _DF 0
 #define _FN 1
+#define _AR 2
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap _DF: default layer */
@@ -38,14 +39,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,  _______,  AG_TOGG,  KC_END,   RESET,    _______,  _______,  _______,  _______,  _______,  KC_MPLY,  KC_MPRV,  KC_MNXT,  _______,
     _______,  KC_HOME,  S1_DEC,   S1_INC,   S2_DEC,   S2_INC,   KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,            _______,
     _______,            EF_DEC,   EF_INC,   H1_DEC,   H1_INC,   H2_DEC,   H2_INC,   BR_DEC,   BR_INC,   ES_DEC,   ES_INC,             _______,
-    KC_VOLU,  KC_VOLD,  KC_MUTE,                                _______,                                _______,  _______,  _______,  _______),
+    KC_VOLU,  KC_VOLD,  KC_MUTE,                                _______,                                TG(_AR),  _______,  _______,  _______),
 
-[2] = LAYOUT_60_ansi(
+/* Keymap _AR: arrow keys on right-hand modifiers */
+[_AR] = LAYOUT_60_ansi(
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,                      _______,
-    _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  _______),
+    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,                      KC_UP,
+    _______,  _______,  _______,                                _______,                                _______,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
 [3] = LAYOUT_60_ansi(
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
@@ -55,6 +57,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  _______)
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     return true;
 }
