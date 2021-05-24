@@ -23,6 +23,7 @@
 #define _DF 0
 #define _FN 1
 #define _AR 2
+#define _CT 3
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap _DF: default layer */
@@ -35,11 +36,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 /* Keymap _FN: function layer */
 [_FN] = LAYOUT_60_ansi(
-    KC_GRV,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,   KC_DEL ,
-    _______,  _______,  AG_TOGG,  KC_END,   RESET,    _______,  _______,  _______,  _______,  _______,  KC_MPLY,  KC_MPRV,  KC_MNXT,  _______,
-    _______,  KC_HOME,  S1_DEC,   S1_INC,   S2_DEC,   S2_INC,   KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,            _______,
-    _______,            EF_DEC,   EF_INC,   H1_DEC,   H1_INC,   H2_DEC,   H2_INC,   BR_DEC,   BR_INC,   ES_DEC,   ES_INC,             _______,
-    KC_VOLU,  KC_VOLD,  KC_MUTE,                                _______,                                TG(_AR),  _______,  _______,  _______),
+    KC_GRV,   KC_F1,    KC_F2,    KC_F3,    KC_F4,    KC_F5,    KC_F6,    KC_F7,    KC_F8,    KC_F9,    KC_F10,   KC_F11,   KC_F12,   KC_DEL,
+    _______,  _______,  AG_TOGG,  KC_END,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_MPRV,  KC_MNXT,  KC_MPLY,
+    _______,  KC_HOME,  _______,  _______,  _______,  _______,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,            _______,
+    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_VOLD,  KC_VOLU,  KC_MUTE,                      _______,
+    _______,  _______,  _______,                                _______,                                TG(_AR),  _______,  _______,  MO(_CT)),
 
 /* Keymap _AR: arrow keys on right-hand modifiers */
 [_AR] = LAYOUT_60_ansi(
@@ -49,11 +50,12 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,                      KC_UP,
     _______,  _______,  _______,                                _______,                                _______,  KC_LEFT,  KC_DOWN,  KC_RGHT),
 
-[3] = LAYOUT_60_ansi(
+/* Keymap _KT: keyboard control features */
+[_CT] = LAYOUT_60_ansi(
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,                      _______,
+    _______,  _______,  _______,  _______,  RESET,    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
+    _______,  _______,  S1_DEC,   S1_INC,   S2_DEC,   S2_INC,   _______,  _______,  _______,  _______,  _______,  _______,            _______,
+    _______,            EF_DEC,   EF_INC,   H1_DEC,   H1_INC,   H2_DEC,   H2_INC,   BR_DEC,   BR_INC,   ES_DEC,   ES_INC,             _______,
     _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  _______)
 };
 
