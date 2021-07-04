@@ -18,8 +18,16 @@
 // Helpful defines
 #define HYPCAPS MT(MOD_HYPR, KC_CAPS)
 #define SPC_FN1 LT(1, KC_SPACE)
-#define LS_F MT(MOD_LSFT, KC_F)
-#define RS_J MT(MOD_RSFT, KC_J)
+
+#define LC_A    MT(MOD_LCTL, KC_A)
+#define LA_S    MT(MOD_LALT, KC_S)
+#define LG_D    MT(MOD_LGUI, KC_D)
+#define LS_F    MT(MOD_LSFT, KC_F)
+
+#define RS_J    MT(MOD_RSFT, KC_J)
+#define RG_K    MT(MOD_RGUI, KC_K)
+#define RA_L    MT(MOD_RALT, KC_L)
+#define RC_SCLN MT(MOD_RCTL, KC_SCLN)
 
 // Layer names
 #define _DF 0
@@ -32,7 +40,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 [_DF] = LAYOUT_60_ansi(
     KC_GESC,  KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,
     KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,
-    HYPCAPS,  KC_A,     KC_S,     KC_D,     LS_F,     KC_G,     KC_H,     RS_J,     KC_K,     KC_L,     KC_SCLN,  KC_QUOT,            KC_ENT,
+    HYPCAPS,  LC_A,     LA_S,     LG_D,     LS_F,     KC_G,     KC_H,     RS_J,     RG_K,     RA_L,     RC_SCLN,  KC_QUOT,            KC_ENT,
     KC_LSFT,            KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,            KC_RSFT,
     KC_LCTL,  KC_LALT,  KC_LGUI,                                SPC_FN1,                                KC_RGUI,  KC_RALT,  MO(_FN),  KC_RCTL),
 
@@ -63,4 +71,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 bool process_record_user(uint16_t keycode, keyrecord_t* record) {
     return true;
+}
+
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LC_A:
+        case LA_S:
+        case LG_D:
+        case LS_F:
+        case RS_J:
+        case RG_K:
+        case RA_L:
+        case RC_SCLN:
+            return true;
+        default:
+            return false;
+    }
 }
