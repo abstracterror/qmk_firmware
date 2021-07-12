@@ -15,34 +15,37 @@
  */
 #include QMK_KEYBOARD_H
 
-// Helpful defines
-#define HYPCAPS MT(MOD_HYPR, KC_CAPS)
-#define SPC_FN1 LT(1, KC_SPACE)
-
-#define LC_A    MT(MOD_LCTL, KC_A)
-#define LA_S    MT(MOD_LALT, KC_S)
-#define LG_D    MT(MOD_LGUI, KC_D)
-#define LS_F    MT(MOD_LSFT, KC_F)
-
-#define RS_J    MT(MOD_RSFT, KC_J)
-#define RG_K    MT(MOD_RGUI, KC_K)
-#define RA_L    MT(MOD_RALT, KC_L)
-#define RC_SCLN MT(MOD_RCTL, KC_SCLN)
-
 // Layer names
 #define _DF 0
 #define _FN 1
-#define _AR 2
+#define _NM 2
 #define _CT 3
+
+// Layer tap names
+#define FN_SPC  LT(_FN, KC_SPACE)
+#define NUM_H   LT(_NM, KC_H)
+
+// Mod tap names
+#define HYPCAPS HYPR_T(KC_CAPS)
+
+#define LCTL_A  LCTL_T(KC_A)
+#define LALT_S  LALT_T(KC_S)
+#define LGUI_D  LGUI_T(KC_D)
+#define LSFT_F  LSFT_T(KC_F)
+
+#define RSFT_J  RSFT_T(KC_J)
+#define RGUI_K  RGUI_T(KC_K)
+#define RALT_L  RALT_T(KC_L)
+#define RCTL_SC RCTL_T(KC_SCLN)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Keymap _DF: default layer */
 [_DF] = LAYOUT_60_ansi(
     KC_GESC,  KC_1,     KC_2,     KC_3,     KC_4,     KC_5,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,     KC_MINS,  KC_EQL,   KC_BSPC,
     KC_TAB,   KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,     KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,     KC_LBRC,  KC_RBRC,  KC_BSLS,
-    HYPCAPS,  LC_A,     LA_S,     LG_D,     LS_F,     KC_G,     KC_H,     RS_J,     RG_K,     RA_L,     RC_SCLN,  KC_QUOT,            KC_ENT,
+    HYPCAPS,  LCTL_A,   LALT_S,   LGUI_D,   LSFT_F,   KC_G,     NUM_H,    RSFT_J,   RGUI_K,   RALT_L,   RCTL_SC,  KC_QUOT,            KC_ENT,
     KC_LSFT,            KC_Z,     KC_X,     KC_C,     KC_V,     KC_B,     KC_N,     KC_M,     KC_COMM,  KC_DOT,   KC_SLSH,            KC_RSFT,
-    KC_LCTL,  KC_LALT,  KC_LGUI,                                SPC_FN1,                                KC_RGUI,  KC_RALT,  MO(_FN),  KC_RCTL),
+    KC_LCTL,  KC_LALT,  KC_LGUI,                                FN_SPC,                                 KC_RGUI,  KC_RALT,  MO(_FN),  KC_RCTL),
 
 /* Keymap _FN: function layer */
 [_FN] = LAYOUT_60_ansi(
@@ -50,15 +53,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,  _______,  AG_TOGG,  KC_END,   _______,  _______,  _______,  _______,  _______,  _______,  _______,  KC_MPRV,  KC_MNXT,  KC_MPLY,
     _______,  KC_HOME,  _______,  _______,  KC_PGDN,  _______,  KC_LEFT,  KC_DOWN,  KC_UP,    KC_RGHT,  _______,  _______,            _______,
     _______,            _______,  _______,  _______,  _______,  KC_PGUP,  _______,  KC_MUTE,  KC_VOLD,  KC_VOLU,  KC_INS,             _______,
-    _______,  _______,  _______,                                _______,                                TG(_AR),  _______,  _______,  MO(_CT)),
+    _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  MO(_CT)),
 
-/* Keymap _AR: arrow keys on right-hand modifiers */
-[_AR] = LAYOUT_60_ansi(
+/* Keymap _NM: numbers on left hand */
+[_NM] = LAYOUT_60_ansi(
     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,            _______,
-    _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,                      KC_UP,
-    _______,  _______,  _______,                                _______,                                _______,  KC_LEFT,  KC_DOWN,  KC_RGHT),
+    _______,  _______,  KC_7,     KC_8,     KC_9,     KC_0,     _______,  _______,  _______,  _______,  _______,  _______,  _______,  _______,
+    _______,  _______,  KC_4,     KC_5,     KC_6,     KC_0,     _______,  _______,  _______,  _______,  _______,  _______,            _______,
+    _______,            _______,  KC_1,     KC_2,     KC_3,     KC_0,     _______,  _______,  _______,  _______,  _______,            _______,
+    _______,  _______,  _______,                                _______,                                _______,  _______,  _______,  _______),
 
 /* Keymap _KT: keyboard control features */
 [_CT] = LAYOUT_60_ansi(
@@ -75,14 +78,14 @@ bool process_record_user(uint16_t keycode, keyrecord_t* record) {
 
 bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
-        case LC_A:
-        case LA_S:
-        case LG_D:
-        case LS_F:
-        case RS_J:
-        case RG_K:
-        case RA_L:
-        case RC_SCLN:
+        case LCTL_A:
+        case LALT_S:
+        case LGUI_D:
+        case LSFT_F:
+        case RSFT_J:
+        case RGUI_K:
+        case RALT_L:
+        case RCTL_SC:
             return true;
         default:
             return false;
