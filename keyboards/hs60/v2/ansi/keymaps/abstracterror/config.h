@@ -8,5 +8,10 @@
 // See `get_tapping_force_hold` in keymap.c.
 #define TAPPING_FORCE_HOLD_PER_KEY
 
+// Treat hold and release without pressing another key as a tap. This prevents
+// dropped letters when a key is accidentally held for longer than the tapping
+// term.
+#define RETRO_TAPPING
+
 #undef RGB_BACKLIGHT_CAPS_LOCK_INDICATOR
 #define RGB_BACKLIGHT_CAPS_LOCK_INDICATOR { .color = { .h = 0, .s = 255 }, .index = 254 }
