@@ -36,10 +36,10 @@
 
 // layer tap names
 #define FN_SPC LT(_FN, KC_SPC)
-#define SY_SPC LT(_SY, KC_SPC)
-#define NM_BSPC LT(_NM, KC_BSPC)
+#define NM_ENT LT(_NM, KC_ENT)
+#define NM_ESC LT(_NM, KC_ESC)
 #define SY_BSPC LT(_SY, KC_BSPC)
-#define SY_ENT LT(_SY, KC_ENT)
+#define SY_DEL LT(_SY, KC_DEL)
 
 // layers with mods
 #define CT_LCTL LM(_CT, MOD_LCTL)
@@ -50,15 +50,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_TAB,           KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC,
         KC_CAPS,          LCTL_A,  LALT_S,  LGUI_D,  LSFT_F,  KC_G,    KC_H,    RSFT_J,  RGUI_K,  RALT_L,  RCTL_SC, KC_ENT,
         KC_LSFT, XXXXXXX, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH,
-        KC_LCTL, KC_LALT, KC_LGUI,          NM_BSPC,          SY_ENT,           FN_SPC,           KC_RGUI, KC_RALT, CT_LCTL
+        KC_LCTL, KC_LALT, KC_LGUI,          SY_BSPC,          NM_ENT,           FN_SPC,           KC_RGUI, KC_RALT, CT_LCTL
     ),
 
     [_FN] = LAYOUT_all(
                                                                                                                     _______,
-        _______,          KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_DEL,
+        _______,          KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F12,
         _______,          KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______, KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT, KC_F11,  KC_ESC,
-        _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______, _______, _______, _______, KC_F12,
-        _______, _______, _______,          _______,          _______,          _______,          _______, _______, _______
+        _______, _______, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  _______, _______, _______, _______, _______, KC_INS,
+        _______, _______, _______,          SY_DEL,           NM_ESC,           _______,          _______, _______, _______
     ),
 
     [_NM] = LAYOUT_all(
