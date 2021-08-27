@@ -16,6 +16,9 @@
 
 #pragma once
 
+/* Reduce OLED brightness */
+#define OLED_BRIGHTNESS 5
+
 /* Define custom font */
 #define OLED_FONT_H "keyboards/mechwild/mercutio/lib/mercutiofont.c"
 
