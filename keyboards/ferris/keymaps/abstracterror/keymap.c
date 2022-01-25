@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include QMK_KEYBOARD_H
+#include "g/keymap_combo.h"
 
 #define NUM OSL(_NUM)
 #define SYM OSL(_SYM)
