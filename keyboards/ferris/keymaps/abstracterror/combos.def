@@ -1,3 +1,3 @@
 //   name    result  chord keys
 COMB(QW_ESC, KC_ESC, KC_Q,         KC_W)
-COMB(AR_TAB, KC_TAB, LCTL_T(KC_A), LALT_T(KC_R))
+COMB(AR_TAB, KC_TAB, LCTL_T(KC_A), LSFT_T(KC_R))
