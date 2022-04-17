@@ -17,6 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 #include "g/keymap_combo.h"
+#include "features/caps_word.h"
 
 #define MO_NUM MO(_NUM)
 #define MO_SYM MO(_SYM)
@@ -106,3 +107,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`-----------------'  `-----------------'
   ),
 };
+
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    if (!process_caps_word(keycode, record)) { return false; }
+
+    return true;
+}
+
+bool caps_word_press_user(uint16_t keycode) {
+    switch (keycode) {
+        case KC_A ... KC_Z:
+            add_weak_mods(MOD_BIT(KC_LSFT));
+            return true;
+        case KC_1 ... KC_0:
+        case KC_BSPC:
+        case KC_DEL:
+        case KC_UNDS:
+            return true;
+        default:
+            // deactivate caps-word
+            return false;
+    }
+}
