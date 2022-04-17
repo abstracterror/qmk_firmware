@@ -38,12 +38,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define O_RCTL RCTL_T(KC_O)
 #define SLS_MEH MEH_T(KC_SLSH)
 
+#define SFT_CW TD(TD_SCW)
+
 enum layers {
     _BASE,
     _SYM,
     _NUM,
     _TOP,
     _FUN
+};
+
+enum dances {
+    TD_SCW
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -55,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
          KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, SLS_MEH,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                           MO_NUM, KC_LSFT,    SPC_FUN,  MO_SYM
+                                           MO_NUM,  SFT_CW,    SPC_FUN,  MO_SYM
                                       //`-----------------'  `-----------------'
   ),
 
@@ -129,3 +135,21 @@ bool caps_word_press_user(uint16_t keycode) {
             return false;
     }
 }
+
+void dance_shift_caps_finished(qk_tap_dance_state_t* state, void* user_data) {
+    if (state->count == 1) {
+        register_code(KC_LSFT);
+    } else {
+        caps_word_set(true);
+    }
+}
+
+void dance_shift_caps_reset(qk_tap_dance_state_t* state, void* user_data) {
+    if (state->count == 1) {
+        unregister_code(KC_LSFT);
+    }
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [TD_SCW] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_shift_caps_finished, dance_shift_caps_reset)
+};
