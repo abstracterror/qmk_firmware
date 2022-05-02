@@ -17,28 +17,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include QMK_KEYBOARD_H
 #include "g/keymap_combo.h"
-#include "features/caps_word.h"
+#include "keymap_extras/keymap_uk.h"
 
-#define MO_NUM MO(_NUM)
-#define MO_SYM MO(_SYM)
-
+#define TAB_NUM LT(_NUM, KC_TAB)
+#define SFT_CAP TD(TD_SHIFT_CAPS)
 #define SPC_FUN LT(_FUN, KC_SPC)
 #define ZERO_FUN LT(_FUN, KC_0)
+#define MO_SYM MO(_SYM)
 
 #define MO_TOP MO(_TOP)
 
-#define A_LCTL LCTL_T(KC_A)
-#define R_LSFT LSFT_T(KC_R)
-#define S_LALT LALT_T(KC_S)
-#define T_LGUI LGUI_T(KC_T)
+#define A_LCTL LCTL_T(UK_A)
+#define R_LSFT LSFT_T(UK_R)
+#define S_LGUI LGUI_T(UK_S)
+#define T_LALT LALT_T(UK_T)
 
-#define N_RGUI RGUI_T(KC_N)
-#define E_RALT RALT_T(KC_E)
-#define I_RSFT RSFT_T(KC_I)
-#define O_RCTL RCTL_T(KC_O)
-#define SLS_MEH MEH_T(KC_SLSH)
+#define N_LALT LALT_T(UK_N)
+#define E_LGUI LGUI_T(UK_E)
+#define I_LSFT LSFT_T(UK_I)
+#define O_LCTL LCTL_T(UK_O)
 
-#define SFT_CW TD(TD_SCW)
+#define MHA(letter) MEH(KC_##letter)
 
 enum layers {
     _BASE,
@@ -49,29 +48,29 @@ enum layers {
 };
 
 enum dances {
-    TD_SCW
+    TD_SHIFT_CAPS
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_split_3x5_2(
   //,--------------------------------------------.                    ,--------------------------------------------.
-         KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,                         KC_J,    KC_L,    KC_U,    KC_Y, KC_BSPC,
+         UK_Q,    UK_W,    UK_F,    UK_P,    UK_B,                         UK_J,    UK_L,    UK_U,    UK_Y, KC_BSPC,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-       A_LCTL,  R_LSFT,  S_LALT,  T_LGUI,    KC_G,                         KC_M,  N_RGUI,  E_RALT,  I_RSFT,  O_RCTL,
+       A_LCTL,  R_LSFT,  S_LGUI,  T_LALT,    UK_G,                         UK_M,  N_LALT,  E_LGUI,  I_LSFT,  O_LCTL,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-         KC_Z,    KC_X,    KC_C,    KC_D,    KC_V,                         KC_K,    KC_H, KC_COMM,  KC_DOT, SLS_MEH,
+         UK_Z,    UK_X,    UK_C,    UK_D,    UK_V,                         UK_K,    UK_H, UK_COMM,  UK_DOT, UK_SLSH,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                           MO_NUM,  SFT_CW,    SPC_FUN,  MO_SYM
+                                          TAB_NUM, SFT_CAP,    SPC_FUN,  MO_SYM
                                       //`-----------------'  `-----------------'
   ),
 
   [_SYM] = LAYOUT_split_3x5_2(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      KC_COLN, KC_PLUS, KC_UNDS, KC_DQUO, KC_LPRN,                      _______, _______, _______, _______, _______,
+      UK_COLN, UK_PLUS, UK_UNDS, UK_DQUO, XXXXXXX,                       MHA(J),  MHA(L),  MHA(U),  MHA(Y), XXXXXXX,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      _______,  KC_EQL, KC_MINS, KC_QUOT, KC_LCBR,                      _______, KC_LGUI, KC_LALT, KC_LSFT, KC_LCTL,
+      XXXXXXX,  UK_EQL, UK_MINS, UK_QUOT, XXXXXXX,                      XXXXXXX, KC_LALT, KC_LGUI, KC_LSFT, KC_LCTL,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, KC_LBRC,                      _______, _______, _______, _______, _______,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                            MO_TOP, _______,    _______, _______
                                       //`-----------------'  `-----------------'
@@ -79,11 +78,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_NUM] = LAYOUT_split_3x5_2(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      _______, _______, _______, _______, _______,                      KC_RPRN,    KC_4,    KC_5,    KC_6, KC_SCLN,
+       MHA(Q),  MHA(W),  MHA(F),  MHA(P),  MHA(B),                      XXXXXXX,    UK_4,    UK_5,    UK_6, UK_SCLN,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI, _______,                      KC_RCBR,    KC_1,    KC_2,    KC_3, KC_BSLS,
+      KC_LCTL, KC_LSFT, KC_LGUI, KC_LALT, XXXXXXX,                      XXXXXXX,    UK_1,    UK_2,    UK_3, UK_BSLS,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, _______,                      KC_RBRC,    KC_7,    KC_8,    KC_9, KC_PIPE,
+      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX,    UK_7,    UK_8,    UK_9, UK_PIPE,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                           _______, _______,   ZERO_FUN,  MO_TOP
                                       //`-----------------'  `-----------------'
@@ -91,11 +90,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_TOP] = LAYOUT_split_3x5_2(
   //,--------------------------------------------.                    ,--------------------------------------------.
-      KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC,                      KC_CIRC, KC_AMPR, KC_ASTR,  KC_GRV, KC_TILD,
+      UK_EXLM,   UK_AT, UK_HASH,  UK_DLR, UK_PERC,                      UK_CIRC, UK_AMPR, UK_ASTR,  UK_GRV, UK_TILD,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-      _______, _______, _______, _______, _______,                      _______, _______, _______, _______, _______,
+      KC_LCTL, KC_LSFT, KC_LGUI, KC_LALT, XXXXXXX,                      XXXXXXX, KC_LALT, KC_LGUI, KC_LSFT, KC_LCTL,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-        RESET, _______, _______, _______, _______,                      _______, _______, _______, _______, _______,
+        RESET, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                      XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
                                           _______, _______,    _______, _______
                                       //`-----------------'  `-----------------'
@@ -107,49 +106,33 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
       KC_LCTL, KC_LSFT, KC_LALT, KC_LGUI,  KC_ESC,                      KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT,  KC_ENT,
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
-       KC_F10, KC_F11,  KC_F12,  _______, _______,                      KC_HOME, KC_PGDN, KC_PGUP,  KC_END,  KC_INS,
+       KC_F10, KC_F11,  KC_F12,  XXXXXXX, XXXXXXX,                      KC_HOME, KC_PGDN, KC_PGUP,  KC_END,  KC_INS,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                          _______,  KC_TAB,    _______, _______
+                                          _______, _______,    _______, _______
                                       //`-----------------'  `-----------------'
   ),
 };
 
-bool process_record_user(uint16_t keycode, keyrecord_t* record) {
-    if (!process_caps_word(keycode, record)) { return false; }
+static bool caps_lock = false;
 
-    return true;
-}
-
-bool caps_word_press_user(uint16_t keycode) {
-    switch (keycode) {
-        case KC_A ... KC_Z:
-            add_weak_mods(MOD_BIT(KC_LSFT));
-            return true;
-        case KC_1 ... KC_0:
-        case KC_BSPC:
-        case KC_DEL:
-        case KC_UNDS:
-            return true;
-        default:
-            // deactivate caps-word
-            return false;
-    }
+void led_set_kb(uint8_t usb_led) {
+    caps_lock = host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK);
 }
 
 void dance_shift_caps_finished(qk_tap_dance_state_t* state, void* user_data) {
-    if (state->count == 1) {
+    if (!caps_lock && state->count == 1) {
         register_code(KC_LSFT);
     } else {
-        caps_word_set(true);
+        tap_code(KC_CAPS);
     }
 }
 
 void dance_shift_caps_reset(qk_tap_dance_state_t* state, void* user_data) {
-    if (state->count == 1) {
+    if (!caps_lock && state->count == 1) {
         unregister_code(KC_LSFT);
     }
 }
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_SCW] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_shift_caps_finished, dance_shift_caps_reset)
+    [TD_SHIFT_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_shift_caps_finished, dance_shift_caps_reset)
 };
