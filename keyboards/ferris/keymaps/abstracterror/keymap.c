@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define I_LSFT LSFT_T(UK_I)
 #define O_LCTL LCTL_T(UK_O)
 
-#define MHA(letter) MEH(KC_##letter)
+#define MHA(letter) LCTL(LSFT(LGUI(KC_##letter)))
 
 enum layers {
     _BASE,
