@@ -1147,4 +1147,6 @@ void protocol_post_task(void) {
 #endif
 }
 
-uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint16_t wIndex, const void **const DescriptorAddress) { return get_usb_descriptor(wValue, wIndex, DescriptorAddress); }
+uint16_t CALLBACK_USB_GetDescriptor(const uint16_t wValue, const uint16_t wIndex, const void **const DescriptorAddress) {
+    return get_usb_descriptor(wValue, wIndex, USB_ControlRequest.wLength, DescriptorAddress);
+}

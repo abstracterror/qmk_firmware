@@ -722,3 +722,11 @@ ifeq ($(strip $(BLUETOOTH_ENABLE)), yes)
         SRC += $(TMK_DIR)/protocol/serial_uart.c
     endif
 endif
+
+ifeq ($(strip $(OS_DETECTION_ENABLE)), yes)
+    SRC += $(QUANTUM_DIR)/os_detection.c
+    OPT_DEFS += -DOS_DETECTION_ENABLE
+    ifeq ($(strip $(OS_DETECTION_DEBUG_ENABLE)), yes)
+        OPT_DEFS += -DOS_DETECTION_DEBUG_ENABLE
+    endif
+endif

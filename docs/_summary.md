@@ -85,6 +85,7 @@
     * [Key Overrides](feature_key_overrides.md)
     * [Layers](feature_layers.md)
     * [One Shot Keys](one_shot_keys.md)
+    * [OS Detection](feature_os_detection.md)
     * [Pointing Device](feature_pointing_device.md)
     * [Raw HID](feature_rawhid.md)
     * [Sequencer](feature_sequencer.md)
