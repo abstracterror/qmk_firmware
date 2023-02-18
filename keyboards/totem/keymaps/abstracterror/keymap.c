@@ -5,7 +5,6 @@
 #include "totem.h"
 
 #define TAB_NUM LT(_NUM, KC_TAB)
-#define SFT_CAP TD(TD_SHIFT_CAPS)
 #define SPC_FUN LT(_FUN, KC_SPC)
 #define ZERO_FUN LT(_FUN, KC_0)
 #define MO_SYM MO(_SYM)
@@ -21,6 +20,8 @@
 #define E_GUI LGUI_T(UK_E)
 #define I_SFT LSFT_T(UK_I)
 #define O_CTL LCTL_T(UK_O)
+
+#define ESC_MEH MT(MOD_LSFT | MOD_LCTL | MOD_LGUI, KC_ESC)
 
 #define MHA(letter) MEH(KC_##letter)
 
@@ -40,7 +41,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                  A_CTL,   R_SFT,   S_GUI,   T_ALT,   UK_G,       UK_M,    N_ALT,   E_GUI,   I_SFT,   O_CTL,
         UK_Q,    UK_Z,    UK_X,    UK_C,    UK_D,    UK_V,       UK_K,    UK_H,    UK_COMM, UK_DOT,  UK_SLSH, UK_SCLN,
 
-                                   KC_ESC,  TAB_NUM, KC_LSFT,    SPC_FUN, MO_SYM,  KC_ENT
+                                   ESC_MEH, TAB_NUM, KC_LSFT,    SPC_FUN, MO_SYM,  KC_ENT
     ),
 
     [_SYM] = LAYOUT(
