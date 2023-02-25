@@ -76,3 +76,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                    _______, _______, _______,    _______, _______, _______
     )
 };
+
+void keyboard_pre_init_user(void) {
+    // turn off the red user-addressable LED (GPIO 17)
+    setPinOutput(17);
+    writePinHigh(17);
+
+    // turn off the green user-addressable LED (GPIO 16)
+    setPinOutput(16);
+    writePinHigh(16);
+
+    // turn off the blue user-addressable LED (GPIO 25)
+    setPinOutput(25);
+    writePinHigh(25);
+}
