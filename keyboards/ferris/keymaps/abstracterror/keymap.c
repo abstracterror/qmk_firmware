@@ -20,7 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "keymap_extras/keymap_uk.h"
 
 #define TAB_NUM LT(_NUM, KC_TAB)
-#define SFT_CAP TD(TD_SHIFT_CAPS)
 #define SPC_FUN LT(_FUN, KC_SPC)
 #define ZERO_FUN LT(_FUN, KC_0)
 #define MO_SYM MO(_SYM)
@@ -47,10 +46,6 @@ enum layers {
     _FUN
 };
 
-enum dances {
-    TD_SHIFT_CAPS
-};
-
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_split_3x5_2(
   //,--------------------------------------------.                    ,--------------------------------------------.
@@ -60,7 +55,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
          UK_Z,    UK_X,    UK_C,    UK_D,    UK_V,                         UK_K,    UK_H, UK_COMM,  UK_DOT, UK_SLSH,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                          TAB_NUM, SFT_CAP,    SPC_FUN,  MO_SYM
+                                          TAB_NUM, KC_LSFT,    SPC_FUN,  MO_SYM
                                       //`-----------------'  `-----------------'
   ),
 
@@ -108,31 +103,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------|
        KC_F10, KC_F11,  KC_F12,  XXXXXXX, XXXXXXX,                      KC_HOME, KC_PGDN, KC_PGUP,  KC_END,  KC_INS,
   //|--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------|
-                                          _______, _______,    _______, _______
+                                          _______, KC_CAPS,    _______, _______
                                       //`-----------------'  `-----------------'
   ),
-};
-
-static bool caps_lock = false;
-
-void led_set_kb(uint8_t usb_led) {
-    caps_lock = host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK);
-}
-
-void dance_shift_caps_finished(qk_tap_dance_state_t* state, void* user_data) {
-    if (!caps_lock && state->count == 1) {
-        register_code(KC_LSFT);
-    } else {
-        tap_code(KC_CAPS);
-    }
-}
-
-void dance_shift_caps_reset(qk_tap_dance_state_t* state, void* user_data) {
-    if (!caps_lock && state->count == 1) {
-        unregister_code(KC_LSFT);
-    }
-}
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-    [TD_SHIFT_CAPS] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, dance_shift_caps_finished, dance_shift_caps_reset)
 };
