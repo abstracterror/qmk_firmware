@@ -52,14 +52,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
          KC_ESC,    UK_1,    UK_2,    UK_3,    UK_4,    UK_5,    UK_6,    UK_7,    UK_8,    UK_9,    UK_0, UK_MINS,  UK_EQL, UK_BSLS,  UK_GRV,
          KC_TAB,    UK_Q,    UK_W,    UK_E,    UK_R,    UK_T,    UK_Y,    UK_U,    UK_I,    UK_O,    UK_P, UK_LBRC, UK_RBRC,          KC_BSPC,
         KC_LCTL,   CTL_A,   ALT_S,   GUI_D,   SFT_F,    UK_G,    UK_H,   SFT_J,   GUI_K,   ALT_L, CTL_SCL, UK_QUOT,                    KC_ENT,
-        KC_LSFT,    UK_Z,    UK_X,    UK_C,    UK_V,    UK_B,    UK_N,    UK_M, UK_COMM,  UK_DOT, UK_SLSH,                   KC_RSFT, MO(_FN),
+        KC_LSFT,    UK_Z,    UK_X,    UK_C,    UK_V,    UK_B,    UK_N,    UK_M, UK_COMM,  UK_DOT, UK_SLSH,                   KC_RSFT,  KC_MEH,
                  KC_LALT, KC_LGUI,                         FN_SPC,                       KC_RGUI, KC_RALT
     ),
 
     [_FN] = LAYOUT(
         _______,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,  KC_F10,  KC_F11,  KC_F12, _______, _______,
         _______,    UK_1,    UK_2,    UK_3,    UK_4,    UK_5,    UK_6,    UK_7,    UK_8,    UK_9,    UK_0, UK_MINS,  UK_EQL,           KC_DEL,
-        KC_CAPS, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, _______, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______, _______,                   _______,
+        KC_CAPS, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT,  KC_ESC, KC_LEFT, KC_DOWN,   KC_UP, KC_RGHT, _______, _______,                   _______,
         _______, _______, _______, _______, _______, _______, KC_HOME, KC_PGDN, KC_PGUP,  KC_END,  KC_INS,                   _______, QK_BOOT,
                  _______, _______,                        _______,                       _______, _______
     ),
