@@ -18,15 +18,18 @@
 /* Key overrides (https://docs.qmk.fm/#/feature_key_overrides)
  *
  * Modify the UK 2/" key so that it sends @ instead of " when shifted.
+ * Modify the UK 3/£ key so that it sends # instead of £ when shifted.
  * Modify the UK `/¬ key so that it sends ~ instead of ¬ when shifted.
  * Modify the UK '/@ key so that it sends " instead of @ when shifted.
  */
 const key_override_t two_key_override   = ko_make_basic(MOD_MASK_SHIFT, UK_2,      UK_AT);
+const key_override_t three_key_override = ko_make_basic(MOD_MASK_SHIFT, UK_3,    UK_HASH);
 const key_override_t grave_key_override = ko_make_basic(MOD_MASK_SHIFT, UK_GRV,  UK_TILD);
 const key_override_t quote_key_override = ko_make_basic(MOD_MASK_SHIFT, UK_QUOT, UK_DQUO);
 
 const key_override_t **key_overrides = (const key_override_t *[]){
     &two_key_override,
+    &three_key_override,
     &grave_key_override,
     &quote_key_override,
     NULL
