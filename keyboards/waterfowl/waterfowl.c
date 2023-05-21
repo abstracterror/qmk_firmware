@@ -53,7 +53,7 @@ bool encoder_update_kb(uint8_t index, bool clockwise) {
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_kb(oled_rotation_t rotation) {
-    if (is_keyboard_master() && is_keyboard_left()) {
+    if (is_keyboard_left()) {
         return OLED_ROTATION_90;
     } else {
         return OLED_ROTATION_270;
@@ -63,7 +63,7 @@ bool oled_task_kb(void) {
    if (!oled_task_user()) {
        return false;
    }
-   if (is_keyboard_master()) {
+   if (is_keyboard_left()) {
        // Host Keyboard Layer Status
        oled_write_P(PSTR("LAYER:\n"), false);
        oled_write_P(PSTR("\n"), false);

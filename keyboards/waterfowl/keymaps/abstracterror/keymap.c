@@ -106,7 +106,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
 
 #ifdef OLED_ENABLE
 bool oled_task_user(void) {
-    if (!is_keyboard_master()) {
+    if (!is_keyboard_left()) {
         return true;
     }
 
