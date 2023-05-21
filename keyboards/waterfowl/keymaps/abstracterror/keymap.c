@@ -95,7 +95,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 3) {
         // right knob
-        tap_code16(clockwise ? KC_AUDIO_VOL_DOWN : KC_AUDIO_VOL_UP);
+        tap_code(clockwise ? KC_AUDIO_VOL_UP : KC_AUDIO_VOL_DOWN);
     } else {
         return true;
     }
