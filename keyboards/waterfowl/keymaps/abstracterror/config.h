@@ -1,5 +1,8 @@
 #pragma once
 
+// Elite-C can use VBUS detection.
+#undef SPLIT_USB_DETECT
+
 // Handedness is defined by an EEPROM flag.
 #define EE_HANDS
 
