@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include QMK_KEYBOARD_H
 #include <stdio.h>
+#include "os_detection.h"
 #include "g/keymap_combo.h"
 #include "keymap_extras/keymap_uk.h"
 
@@ -92,8 +93,30 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 #ifdef ENCODER_ENABLE
+void tap_undo_redo(bool redo) {
+    switch (detected_host_os()) {
+        case OS_MACOS:
+        case OS_IOS:
+            tap_code16(redo ? S(A(KC_Z)) : A(KC_Z));
+            break;
+        case OS_LINUX:
+            // from the GNOME HIG
+            tap_code16(redo ? S(C(KC_Z)) : C(KC_Z));
+            break;
+        case OS_WINDOWS:
+            tap_code16(redo ? C(KC_Y) : C(KC_Z));
+            break;
+        case OS_UNSURE:
+            // do nothing?
+            break;
+    }
+}
+
 bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 3) {
+    if (index == 1) {
+        // left knob
+        tap_undo_redo(clockwise);
+    } else if (index == 3) {
         // right knob
         tap_code(clockwise ? KC_AUDIO_VOL_UP : KC_AUDIO_VOL_DOWN);
     } else {
