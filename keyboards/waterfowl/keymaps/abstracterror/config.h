@@ -1,5 +1,8 @@
 #pragma once
 
+// Handedness is defined by an EEPROM flag.
+#define EE_HANDS
+
 // Prevent rolls from home row modifier keys from activating the modifier.
 #define IGNORE_MOD_TAP_INTERRUPT
 
