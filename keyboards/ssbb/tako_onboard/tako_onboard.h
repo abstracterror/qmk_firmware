@@ -16,12 +16,9 @@
 
 #pragma once
 
-#define HAL_USE_ADC TRUE
-#define HAL_USE_SERIAL TRUE
+#include "quantum.h"
 
-#ifdef OLED_ENABLE
-    #undef HAL_USE_I2C
-    #define HAL_USE_I2C TRUE
-#endif
 
-#include_next <halconf.h>
+enum keyboard_keycodes {
+    EC_CLBR = QK_KB
+};

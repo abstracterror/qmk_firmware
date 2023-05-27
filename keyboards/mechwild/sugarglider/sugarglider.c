@@ -124,7 +124,7 @@ static void render_logo(void) {     // Render MechWild "MW" Logo
     static const char PROGMEM logo_2[] = {0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0x00};
     static const char PROGMEM logo_3[] = {0xD5, 0xD6, 0xD7, 0xD8, 0x00};
     static const char PROGMEM logo_4[] = {0xDE, 0xD9, 0xDA, 0xDB, 0x00};
-    
+
     oled_write_P(logo_1, false);
     oled_set_cursor(0,1);
     oled_write_P(logo_2, false);
@@ -369,7 +369,7 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
                 tap_toggle();
             }
             return false;
-#endif // ifdef 
+#endif // ifdef
     }
     return process_record_user(keycode, record);
 }

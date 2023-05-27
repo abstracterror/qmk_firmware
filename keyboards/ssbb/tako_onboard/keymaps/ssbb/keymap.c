@@ -43,9 +43,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
 
 	[_FUN] = LAYOUT(
-        QK_BOOT,      KC_MPRV,    KC_MPLY,    KC_MNXT,    C(KC_BRIU), G(KC_EQL),  KC_F7,      KC_F8,      KC_F9,      KC_F10,
-        DB_TOGG,      KC_VOLD,    KC_MUTE,    KC_VOLU,    C(KC_BRID), G(KC_MINS), KC_F4,      KC_F5,      KC_F6,      KC_F11,
-        KC_NO,      KC_NO,      KC_NO,      KC_NO,      KC_NO,      G(KC_0),    KC_F1,      KC_F2,      KC_F3,      KC_F12,
+        QK_BOOT,    KC_MPRV,    KC_MPLY,    KC_MNXT,    C(KC_BRIU), G(KC_EQL),  KC_F7,      KC_F8,      KC_F9,      KC_F10,
+        DB_TOGG,    KC_VOLD,    KC_MUTE,    KC_VOLU,    C(KC_BRID), G(KC_MINS), KC_F4,      KC_F5,      KC_F6,      KC_F11,
+        KC_NO,      KC_NO,      KC_NO,      KC_NO,      EC_CLBR,   G(KC_0),    KC_F1,      KC_F2,      KC_F3,      KC_F12,
         _______,    _______,    _______,    _______
     ),
 };
@@ -116,3 +116,10 @@ bool oled_task_user(void) {
     return false;
 }
 #endif
+
+void keyboard_post_init_user(void) {
+  debug_enable=true;
+  debug_matrix=true;
+  debug_keyboard=true;
+  //debug_mouse=true;
+}

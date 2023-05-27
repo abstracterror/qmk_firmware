@@ -7,7 +7,7 @@ QMK has a GPIO control abstraction layer which is microcontroller agnostic. This
 The following functions provide basic control of GPIOs and are found in `platforms/<platform>/gpio.h`.
 
 | Function                     | Description                                         | Old AVR Examples                                | Old ChibiOS/ARM Examples                         |
-|------------------------------|-----------------------------------------------------|-------------------------------------------------|--------------------------------------------------|
+| ---------------------------- | --------------------------------------------------- | ----------------------------------------------- | ------------------------------------------------ |
 | `setPinInput(pin)`           | Set pin as input with high impedance (High-Z)       | `DDRB &= ~(1<<2)`                               | `palSetLineMode(pin, PAL_MODE_INPUT)`            |
 | `setPinInputHigh(pin)`       | Set pin as input with builtin pull-up resistor      | `DDRB &= ~(1<<2); PORTB \|= (1<<2)`             | `palSetLineMode(pin, PAL_MODE_INPUT_PULLUP)`     |
 | `setPinInputLow(pin)`        | Set pin as input with builtin pull-down resistor    | N/A (Not supported on AVR)                      | `palSetLineMode(pin, PAL_MODE_INPUT_PULLDOWN)`   |
@@ -29,6 +29,7 @@ Each microcontroller can have multiple advanced settings regarding its GPIO. Thi
 The above functions are not always guaranteed to work atomically. Therefore, if you want to prevent interruptions in the middle of operations when using multiple combinations of the above functions, use the following `ATOMIC_BLOCK_FORCEON` macro.
 
 eg.
+
 ```c
 void some_function(void) {
      // some process
