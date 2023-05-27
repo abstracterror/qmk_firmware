@@ -92,7 +92,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 };
 
 
+bool host_os_is_apple(void) {
+    switch (detected_host_os()) {
+        case OS_MACOS:
+        case OS_IOS:
+            return true;
+        default:
+            return false;
+    }
+}
+
+
 #ifdef ENCODER_ENABLE
+
+bool task_switching = false;
+
+// Taps the OS-appropriate keypress for undo or redo.
 void tap_undo_redo(bool redo) {
     switch (detected_host_os()) {
         case OS_MACOS:
@@ -112,18 +127,83 @@ void tap_undo_redo(bool redo) {
     }
 }
 
+// Begins task switching, if not already started.
+void ensure_task_switching(void) {
+    if (!task_switching) {
+        task_switching = true;
+        register_code(KC_LALT);
+    }
+}
+
+// Switches to the next task in the specified direction.
+void select_next_task(bool forwards) {
+    ensure_task_switching();
+    if (!forwards) {
+        register_code(KC_LSFT);
+    }
+    tap_code(KC_TAB);
+    if (!forwards) {
+        unregister_code(KC_LSFT);
+    }
+}
+
+// Ends task switching. If the user pressed the Escape key, then it is
+// passed through to the OS; otherwise, the keypress is swallowed.
+void end_task_switching(uint16_t keycode) {
+    task_switching = false;
+    if (keycode == KC_ESC || keycode == ESC_MEH) {
+        tap_code(KC_ESC);
+    }
+    unregister_code(KC_LALT);
+}
+
+// Processes a keypress during task switching.
+bool process_task_switching_keypress(uint16_t keycode) {
+    if (!host_os_is_apple()) {
+        end_task_switching(keycode);
+        return false;
+    }
+
+    switch (keycode) {
+        case KC_H:
+        case KC_Q:
+            // Pass these through to the OS, without ending task switching.
+            // This allows the user to easily hide or quit multiple tasks.
+            return true;
+        case KC_D:
+            // We support D as a more convenient alternative to H, because it
+            // is on the opposite hand from the encoder.
+            tap_code(KC_H);
+            return false;
+        default:
+            end_task_switching(keycode);
+            return false;
+    }
+}
+
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 1) {
         // left knob
         tap_undo_redo(clockwise);
     } else if (index == 3) {
         // right knob
+        select_next_task(clockwise);
+    } else if (index == 2) {
+        // right roller
         tap_code(clockwise ? KC_AUDIO_VOL_UP : KC_AUDIO_VOL_DOWN);
     } else {
         return true;
     }
     return false;
 }
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    if (task_switching && record->event.pressed) {
+        return process_task_switching_keypress(keycode);
+    }
+    return true;
+}
+
 #endif
 
 
