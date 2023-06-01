@@ -60,10 +60,6 @@ bool matrix_scan_custom(matrix_row_t current_matrix[]) {
     if (cnt++ == 300) {
         cnt = 0;
         ecsm_print_matrix();
-
-        if (debug_enable) {
-           matrix_print();
-        }
     }
 #endif
     return updated;
