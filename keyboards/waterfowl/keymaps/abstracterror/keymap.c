@@ -187,7 +187,11 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         tap_undo_redo(clockwise);
     } else if (index == 3) {
         // right knob
-        select_next_task(clockwise);
+        if (get_mods() != MOD_BIT(KC_LSFT)) {
+            select_next_task(clockwise);
+        } else {
+            tap_code16(clockwise ? A(UK_GRV) : S(A(UK_GRV)));
+        }
     } else if (index == 2) {
         // right roller
         tap_code(clockwise ? KC_AUDIO_VOL_UP : KC_AUDIO_VOL_DOWN);
