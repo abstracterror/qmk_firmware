@@ -200,11 +200,11 @@ static matrix_row_t read_cols(uint8_t row) {
                 // The initial state was all ones and any depressed key at a given column for the currently selected row will have its bit flipped to zero.
                 // The return value is a row as represented in the generic matrix code were the rightmost bits represent the lower columns and zeroes represent non-depressed keys while ones represent depressed keys.
                 // Since the pins are not ordered sequentially, we have to build the correct dataset from the two ports. Refer to the schematic to see where every pin is connected.
-                data |= ( port0 & 0x01 ); 
-                data |= ( port0 & 0x02 ); 
-                data |= ( port1 & 0x10 ) >> 2; 
-                data |= ( port1 & 0x08 ); 
-                data |= ( port0 & 0x40 ) >> 2; 
+                data |= ( port0 & 0x01 );
+                data |= ( port0 & 0x02 );
+                data |= ( port1 & 0x10 ) >> 2;
+                data |= ( port1 & 0x08 );
+                data |= ( port0 & 0x40 ) >> 2;
                 data = ~(data);
 
                 tca9555_status = I2C_STATUS_SUCCESS;

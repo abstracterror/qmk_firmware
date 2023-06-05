@@ -1,4 +1,4 @@
-# Tako
+# Tako Onboard
 
 ![Tako Keyboard](https://github.com/ssbb/tako/blob/dbc6211e5c4ba931b4ea7a987243862151c7dac3/docs/img/assembled.jpg)
 

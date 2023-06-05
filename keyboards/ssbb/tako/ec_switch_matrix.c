@@ -23,13 +23,26 @@
 #include "wait.h"
 #include "split_common/split_util.h"
 
-#define WAIT_DISCHARGE()
-#define WAIT_CHARGE()
+#if defined(MCU_RP)
+#include "hardware/pio.h"
+#endif
+
+#if defined(MCU_RP)
+    #define WAIT_DISCHARGE()
+    #define WAIT_CHARGE()
+    #define cli() __interrupt_disable__()
+    #define sei() __interrupt_enable(NUL)
+#else
+    #define WAIT_DISCHARGE()
+    #define WAIT_CHARGE()
+#endif
 
 /* Pin and port array */
  pin_t row_pins[]     = MATRIX_ROW_PINS;
- pin_t col_channels[] = MATRIX_COL_CHANNELS_LEFT;
- pin_t mux_sel_pins[] = MUX_SEL_PINS_LEFT;
+ pin_t col_channels[] = MATRIX_COL_CHANNELS;
+ pin_t mux_sel_pins[] = MUX_SEL_PINS;
+ pin_t aplex_en_pin = APLEX_EN_PIN;
+ pin_t discharge_pin = DISCHARGE_PIN;
 
 const int rows_len = sizeof row_pins / sizeof row_pins[0];
 const int cols_len = sizeof col_channels / sizeof col_channels[0];
@@ -40,10 +53,11 @@ static uint16_t      ecsm_sw_value[MATRIX_ROWS][MATRIX_COLS];
 static adc_mux adcMux;
 
 static inline void discharge_capacitor(void) {
-    writePinLow(DISCHARGE_PIN);
+    writePinLow(discharge_pin);
 }
+
 static inline void charge_capacitor(uint8_t row) {
-    writePinHigh(DISCHARGE_PIN);
+    writePinHigh(discharge_pin);
     writePinHigh(row_pins[row]);
 }
 
@@ -73,29 +87,50 @@ int ecsm_init(ecsm_config_t const* const ecsm_config) {
     config = *ecsm_config;
 
     if (!isLeftHand) {
+        #ifdef MATRIX_ROW_PINS_RIGHT
         const pin_t row_pins_right[] = MATRIX_ROW_PINS_RIGHT;
-        const pin_t col_channels_right[] = MATRIX_COL_CHANNELS_RIGHT;
-        const pin_t mux_sel_pins_right[] = MUX_SEL_PINS_RIGHT;
-
         for (uint8_t i = 0; i < (sizeof(row_pins_right) / sizeof(row_pins_right[0])); i++) {
             row_pins[i] = row_pins_right[i];
         }
+        #endif
 
+        #ifdef MATRIX_COL_CHANNELS_RIGHT
+        const pin_t col_channels_right[] = MATRIX_COL_CHANNELS_RIGHT;
         for (uint8_t i = 0; i < (sizeof(col_channels_right) / sizeof(col_channels_right[0])); i++) {
             col_channels[i] = col_channels_right[i];
         }
+        #endif
 
+        #ifdef MUX_SEL_PINS_RIGHT
+        const pin_t mux_sel_pins_right[] = MUX_SEL_PINS_RIGHT;
         for (uint8_t i = 0; i < (sizeof(mux_sel_pins_right) / sizeof(mux_sel_pins_right[0])); i++) {
             mux_sel_pins[i] = mux_sel_pins_right[i];
         }
+        #endif
+
+        #ifdef APLEX_EN_PIN_RIGHT
+        aplex_en_pin = APLEX_EN_PIN_RIGHT;
+        #endif
+
+        #ifdef DISCHARGE_PIN_RIGHT
+        discharge_pin = DISCHARGE_PIN_RIGHT;
+        #endif
     }
 
+    #if defined(MCU_STM32)
     palSetLineMode(ANALOG_PORT, PAL_MODE_INPUT_ANALOG);
+    #endif
+
     adcMux = pinToMux(ANALOG_PORT);
 
     // Initialize discharge pin as discharge mode
-    writePinLow(DISCHARGE_PIN);
-    setPinOutputOpenDrain(DISCHARGE_PIN);
+    writePinLow(discharge_pin);
+    #if defined(MCU_STM32)
+    setPinOutputOpenDrain(discharge_pin);
+    #elif defined(MCU_RP)
+    setPinOutput(discharge_pin);
+    // analogReference(ADC_REF_INTERNAL);
+    #endif
 
     // Initialize drive lines
     init_row();
@@ -104,8 +139,8 @@ int ecsm_init(ecsm_config_t const* const ecsm_config) {
     init_mux_sel();
 
     // Enable AMUX
-    setPinOutput(APLEX_EN_PIN);
-    writePinLow(APLEX_EN_PIN);
+    setPinOutput(aplex_en_pin);
+    writePinLow(aplex_en_pin);
 
     return 0;
 }
@@ -120,9 +155,9 @@ int ecsm_update(ecsm_config_t const* const ecsm_config) {
 uint16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
     uint16_t sw_value = 0;
 
-    writePinHigh(APLEX_EN_PIN);
+    writePinHigh(aplex_en_pin);
     select_mux(col);
-    writePinLow(APLEX_EN_PIN);
+    writePinLow(aplex_en_pin);
 
     // Set strobe pins to low state
     writePinLow(row_pins[row]);
@@ -168,7 +203,8 @@ bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
 
     for (int col = 0; col < cols_len; col++) {
         for (int row = 0; row < rows_len; row++) {
-            ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
+            // ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
+            ecsm_sw_value[row][col] = 100;
             updated |= ecsm_update_key(&current_matrix[row], row, col, ecsm_sw_value[row][col]);
         }
     }

@@ -1,33 +1,28 @@
 {
     "usb": {
-        "pid": "0xEC00"
+        "pid": "0xEC01"
     },
-    "processor": "STM32F401",
-    "bootloader": "stm32-dfu",
     "build": {
         "lto": true
     },
+    "pin_compatible": "promicro",
     "features": {
         "audio": false,
         "backlight": false,
-        "bootmagic": true,
+        "bootmagic": false,
         "command": false,
         "console": true,
         "extrakey": true,
         "mousekey": true,
         "nkro": true,
-        "rgblight": false
+        "rgblight": false,
+        "oled": false
     },
     "mouse_key": {
         "enabled": true
     },
-    "bootmagic": {
-        "matrix": [0, 4]
-    },
     "split": {
-        "bootmagic": {
-            "matrix": [4, 4]
-        }
+        "enabled": true
     },
     "layouts": {
         "LAYOUT_split_3x5_2": {
@@ -65,10 +60,10 @@
                 { "label": "R12", "matrix": [6, 1], "x": 10, "y": 2.31 },
                 { "label": "R11", "matrix": [6, 0], "x": 11, "y": 2.93 },
 
-                { "label": "L16", "matrix": [3, 3], "x": 3.5, "y": 3.75 },
-                { "label": "L17", "matrix": [3, 4], "x": 4.5, "y": 4 },
-                { "label": "R17", "matrix": [7, 4], "x": 6.5, "y": 4 },
-                { "label": "R16", "matrix": [7, 3], "x": 7.5, "y": 3.75 }
+                { "label": "L16", "matrix": [3, 0], "x": 3.5, "y": 3.75 },
+                { "label": "L17", "matrix": [3, 1], "x": 4.5, "y": 4 },
+                { "label": "R17", "matrix": [7, 1], "x": 6.5, "y": 4 },
+                { "label": "R16", "matrix": [7, 0], "x": 7.5, "y": 3.75 }
             ]
         }
     }

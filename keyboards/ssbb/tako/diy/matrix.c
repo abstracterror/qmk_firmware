@@ -37,7 +37,13 @@ uint8_t thisHand, thatHand;
 __attribute__((weak)) void matrix_slave_scan_user(void) {}
 
 void matrix_init_custom(void) {
-    split_pre_init();
+    // setPinOutput(D7);
+    // setPinOutput(C6);
+    setPinOutput(B1);
+    setPinOutput(B2);
+    setPinOutput(B6);
+
+    // split_pre_init();
 
     // Default values, overwritten by VIA if enabled later
     ecsm_config.ecsm_actuation_threshold = DEFAULT_ACTUATION_LEVEL;
@@ -52,15 +58,17 @@ void matrix_init_custom(void) {
 }
 
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {
+    // bool updated = false;
     bool updated = ecsm_matrix_scan(current_matrix);
 
-// RAW matrix values on console
-#ifdef CONSOLE_ENABLE
-    static int cnt = 0;
-    if (cnt++ == 300) {
-        cnt = 0;
-        ecsm_print_matrix();
-    }
-#endif
+    // // RAW matrix values on console
+    // #ifdef CONSOLE_ENABLE
+    //     static int cnt = 0;
+    //     if (cnt++ == 300) {
+    //         cnt = 0;
+    //         ecsm_print_matrix();
+    //     }
+    // #endif
+
     return updated;
 }
