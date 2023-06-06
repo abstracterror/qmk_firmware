@@ -21,10 +21,8 @@
 #define DEFAULT_RELEASE_LEVEL 650
 
 // #define SPLIT_HAND_PIN B3
-// #define SERIAL_USART_TX_PIN D3
-#define SOFT_SERIAL_PIN D3
 #define MASTER_LEFT
+#define SERIAL_USART_TX_PIN D3
+#define SERIAL_PIO_USE_PIO1
 
-// #if defined(MCU_RP)
-// #define SERIAL_PIO_USE_PIO0
-// #endif
+#define SERIAL_DEBUG

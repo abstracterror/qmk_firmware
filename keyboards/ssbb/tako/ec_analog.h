@@ -14,28 +14,6 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../ec_switch_matrix.h"
-#include "matrix.h"
+#include "analog.h"
 
-void matrix_init_custom(void) {
-    // Default values, overwritten by VIA if enabled later
-    ecsm_config.ecsm_actuation_threshold = DEFAULT_ACTUATION_LEVEL;
-    ecsm_config.ecsm_release_threshold   = DEFAULT_RELEASE_LEVEL;
-
-    ecsm_init(&ecsm_config);
-}
-
-bool matrix_scan_custom(matrix_row_t current_matrix[]) {
-    bool updated = ecsm_matrix_scan(current_matrix);
-
-    // RAW matrix values on console
-    #ifdef CONSOLE_ENABLE
-        static int cnt = 0;
-        if (cnt++ == 300) {
-            cnt = 0;
-            ecsm_print_matrix();
-        }
-    #endif
-
-    return updated;
-}
+int16_t ec_adc_read(adc_mux mux, bool lock);

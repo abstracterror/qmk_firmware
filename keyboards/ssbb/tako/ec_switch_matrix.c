@@ -22,27 +22,21 @@
 #include "print.h"
 #include "wait.h"
 #include "split_common/split_util.h"
+#include "ec_analog.h"
 
 #if defined(MCU_RP)
 #include "hardware/pio.h"
 #endif
 
-#if defined(MCU_RP)
-    #define WAIT_DISCHARGE()
-    #define WAIT_CHARGE()
-    #define cli() __interrupt_disable__()
-    #define sei() __interrupt_enable(NUL)
-#else
-    #define WAIT_DISCHARGE()
-    #define WAIT_CHARGE()
-#endif
+#define WAIT_DISCHARGE()
+#define WAIT_CHARGE()
 
 /* Pin and port array */
- pin_t row_pins[]     = MATRIX_ROW_PINS;
- pin_t col_channels[] = MATRIX_COL_CHANNELS;
- pin_t mux_sel_pins[] = MUX_SEL_PINS;
- pin_t aplex_en_pin = APLEX_EN_PIN;
- pin_t discharge_pin = DISCHARGE_PIN;
+pin_t row_pins[]     = MATRIX_ROW_PINS;
+pin_t col_channels[] = MATRIX_COL_CHANNELS;
+pin_t mux_sel_pins[] = MUX_SEL_PINS;
+pin_t aplex_en_pin = APLEX_EN_PIN;
+pin_t discharge_pin = DISCHARGE_PIN;
 
 const int rows_len = sizeof row_pins / sizeof row_pins[0];
 const int cols_len = sizeof col_channels / sizeof col_channels[0];
@@ -123,13 +117,15 @@ int ecsm_init(ecsm_config_t const* const ecsm_config) {
 
     adcMux = pinToMux(ANALOG_PORT);
 
+    // Dummy call outside of lock
+    ec_adc_read(adcMux, true);
+
     // Initialize discharge pin as discharge mode
     writePinLow(discharge_pin);
     #if defined(MCU_STM32)
     setPinOutputOpenDrain(discharge_pin);
     #elif defined(MCU_RP)
     setPinOutput(discharge_pin);
-    // analogReference(ADC_REF_INTERNAL);
     #endif
 
     // Initialize drive lines
@@ -141,6 +137,11 @@ int ecsm_init(ecsm_config_t const* const ecsm_config) {
     // Enable AMUX
     setPinOutput(aplex_en_pin);
     writePinLow(aplex_en_pin);
+
+    #if defined(PLATFORM_PICO)
+    gpio_set_drive_strength(discharge_pin, GPIO_DRIVE_STRENGTH_12MA);
+    #endif
+
 
     return 0;
 }
@@ -167,8 +168,9 @@ uint16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
         charge_capacitor(row);
 
         WAIT_CHARGE();
+
         // Read the ADC value
-        sw_value = adc_read(adcMux);
+        sw_value = ec_adc_read(adcMux, false);
     }
 
     // Discharge peak hold capacitor
@@ -203,11 +205,11 @@ bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
 
     for (int col = 0; col < cols_len; col++) {
         for (int row = 0; row < rows_len; row++) {
-            // ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
-            ecsm_sw_value[row][col] = 100;
+            ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
             updated |= ecsm_update_key(&current_matrix[row], row, col, ecsm_sw_value[row][col]);
         }
     }
+
     return updated;
 }
 
