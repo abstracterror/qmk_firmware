@@ -15,13 +15,34 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "../ec_switch_matrix.h"
 #include "matrix.h"
+#include "split_common/split_util.h"
+#include "../ec_switch_matrix.h"
+
+uint16_t low_threshold[MATRIX_ROWS][MATRIX_COLS] = EC_LOW_THRESHOLD_LEFT;
+uint16_t high_threshold[MATRIX_ROWS][MATRIX_COLS] = EC_HIGH_THRESHOLD_RIGHT;
 
 void matrix_init_custom(void) {
-    // Default values, overwritten by VIA if enabled later
-    ecsm_config.ecsm_actuation_threshold = DEFAULT_ACTUATION_LEVEL;
-    ecsm_config.ecsm_release_threshold   = DEFAULT_RELEASE_LEVEL;
+    ecsm_config_t ecsm_config;
+
+    if (!isLeftHand) {
+        const uint16_t low_right[MATRIX_ROWS][MATRIX_COLS] = EC_LOW_THRESHOLD_RIGHT;
+        const uint16_t high_right[MATRIX_ROWS][MATRIX_COLS] = EC_HIGH_THRESHOLD_RIGHT;
+
+        for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+            for (uint8_t col = 0; col < MATRIX_COLS; col++) {
+                low_threshold[row][col]  = low_right[row][col];
+                high_threshold[row][col] = high_right[row][col];
+            }
+        }
+    }
+
+    for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
+        for (uint8_t col = 0; col < MATRIX_COLS; col++) {
+            ecsm_config.low_threshold_matrix[row][col]  = low_threshold[row][col];
+            ecsm_config.high_threshold_matrix[row][col] = high_threshold[row][col];
+        }
+    }
 
     ecsm_init(&ecsm_config);
 }

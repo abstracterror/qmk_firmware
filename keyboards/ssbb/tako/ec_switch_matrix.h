@@ -23,8 +23,8 @@
 #include "matrix.h"
 
 typedef struct {
-    uint16_t ecsm_actuation_threshold; // threshold for key release
-    uint16_t ecsm_release_threshold;   // threshold for key press
+    uint16_t low_threshold_matrix[MATRIX_ROWS][MATRIX_COLS];  // threshold for key release
+    uint16_t high_threshold_matrix[MATRIX_ROWS][MATRIX_COLS]; // threshold for key press
 } ecsm_config_t;
 
 ecsm_config_t ecsm_config;

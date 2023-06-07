@@ -198,13 +198,13 @@ bool ecsm_update_key(matrix_row_t* current_row, uint8_t row, uint8_t col, uint16
     bool current_state = (*current_row >> col) & 1;
 
     // Press to release
-    if (current_state && sw_value < config.ecsm_actuation_threshold) {
+    if (current_state && sw_value < config.low_threshold_matrix[row][col]) {
         *current_row &= ~(1 << col);
         return true;
     }
 
     // Release to press
-    if ((!current_state) && sw_value > config.ecsm_release_threshold) {
+    if ((!current_state) && sw_value > config.high_threshold_matrix[row][col]) {
         *current_row |= (1 << col);
         return true;
     }
