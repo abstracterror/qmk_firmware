@@ -24,19 +24,18 @@
 #include "split_common/split_util.h"
 #include "ec_analog.h"
 
-#if defined(MCU_RP)
-#include "hardware/pio.h"
-#endif
-
 #define WAIT_DISCHARGE()
 #define WAIT_CHARGE()
+
+// STM32 has open-drain pin support so matrix scanning done a bit different.
+#define ALT_SCAN_MODE defined(MCU_STM32)
 
 /* Pin and port array */
 pin_t row_pins[]     = MATRIX_ROW_PINS;
 pin_t col_channels[] = MATRIX_COL_CHANNELS;
 pin_t mux_sel_pins[] = MUX_SEL_PINS;
-pin_t aplex_en_pin = APLEX_EN_PIN;
-pin_t discharge_pin = DISCHARGE_PIN;
+pin_t aplex_en_pin   = APLEX_EN_PIN;
+pin_t discharge_pin  = DISCHARGE_PIN;
 
 const int rows_len = sizeof row_pins / sizeof row_pins[0];
 const int cols_len = sizeof col_channels / sizeof col_channels[0];
@@ -47,13 +46,30 @@ static uint16_t      ecsm_sw_value[MATRIX_ROWS][MATRIX_COLS];
 static adc_mux adcMux;
 
 static inline void discharge_capacitor(void) {
+#if ALT_SCAN_MODE
     writePinLow(discharge_pin);
+#else
+    setPinOutput(discharge_pin);
+#endif
 }
 
 static inline void charge_capacitor(uint8_t row) {
+#if ALT_SCAN_MODE
     writePinHigh(discharge_pin);
     writePinHigh(row_pins[row]);
+#else
+    setPinInput(discharge_pin);
+    writePinHigh(row_pins[row]);
+#endif
 }
+
+#if !ALT_SCAN_MODE
+static inline void clear_all_row_pins(void) {
+    for (int row = 0; row < rows_len; row++) {
+        writePinLow(row_pins[row]);
+    }
+}
+#endif
 
 static inline void init_mux_sel(void) {
     for (int idx = 0; idx < 3; idx++) {
@@ -81,67 +97,59 @@ int ecsm_init(ecsm_config_t const* const ecsm_config) {
     config = *ecsm_config;
 
     if (!isLeftHand) {
-        #ifdef MATRIX_ROW_PINS_RIGHT
+#ifdef MATRIX_ROW_PINS_RIGHT
         const pin_t row_pins_right[] = MATRIX_ROW_PINS_RIGHT;
         for (uint8_t i = 0; i < (sizeof(row_pins_right) / sizeof(row_pins_right[0])); i++) {
             row_pins[i] = row_pins_right[i];
         }
-        #endif
+#endif
 
-        #ifdef MATRIX_COL_CHANNELS_RIGHT
+#ifdef MATRIX_COL_CHANNELS_RIGHT
         const pin_t col_channels_right[] = MATRIX_COL_CHANNELS_RIGHT;
         for (uint8_t i = 0; i < (sizeof(col_channels_right) / sizeof(col_channels_right[0])); i++) {
             col_channels[i] = col_channels_right[i];
         }
-        #endif
+#endif
 
-        #ifdef MUX_SEL_PINS_RIGHT
+#ifdef MUX_SEL_PINS_RIGHT
         const pin_t mux_sel_pins_right[] = MUX_SEL_PINS_RIGHT;
         for (uint8_t i = 0; i < (sizeof(mux_sel_pins_right) / sizeof(mux_sel_pins_right[0])); i++) {
             mux_sel_pins[i] = mux_sel_pins_right[i];
         }
-        #endif
+#endif
 
-        #ifdef APLEX_EN_PIN_RIGHT
+#ifdef APLEX_EN_PIN_RIGHT
         aplex_en_pin = APLEX_EN_PIN_RIGHT;
-        #endif
+#endif
 
-        #ifdef DISCHARGE_PIN_RIGHT
+#ifdef DISCHARGE_PIN_RIGHT
         discharge_pin = DISCHARGE_PIN_RIGHT;
-        #endif
+#endif
     }
 
-    #if defined(MCU_STM32)
+#if defined(MCU_STM32)
     palSetLineMode(ANALOG_PORT, PAL_MODE_INPUT_ANALOG);
-    #endif
+#endif
 
     adcMux = pinToMux(ANALOG_PORT);
-
-    // Dummy call outside of lock
     ec_adc_read(adcMux, true);
 
-    // Initialize discharge pin as discharge mode
     writePinLow(discharge_pin);
-    #if defined(MCU_STM32)
+#if ALT_SCAN_MODE
     setPinOutputOpenDrain(discharge_pin);
-    #elif defined(MCU_RP)
+#else
     setPinOutput(discharge_pin);
-    #endif
+#endif
 
-    // Initialize drive lines
+    // Init drive lines
     init_row();
 
-    // Initialize multiplexer select pin
+    // Init mux select select pin
     init_mux_sel();
 
     // Enable AMUX
     setPinOutput(aplex_en_pin);
     writePinLow(aplex_en_pin);
-
-    #if defined(PLATFORM_PICO)
-    gpio_set_drive_strength(discharge_pin, GPIO_DRIVE_STRENGTH_12MA);
-    #endif
-
 
     return 0;
 }
@@ -156,6 +164,7 @@ int ecsm_update(ecsm_config_t const* const ecsm_config) {
 uint16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
     uint16_t sw_value = 0;
 
+#if ALT_SCAN_MODE
     writePinHigh(aplex_en_pin);
     select_mux(col);
     writePinLow(aplex_en_pin);
@@ -163,19 +172,24 @@ uint16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
     // Set strobe pins to low state
     writePinLow(row_pins[row]);
 
-    ATOMIC_BLOCK_FORCEON {
-        // Set the row pin to high state and have capacitor charge
-        charge_capacitor(row);
+#else
+    discharge_capacitor();
+    clear_all_row_pins();
+    WAIT_DISCHARGE();
+#endif
 
+    ATOMIC_BLOCK_FORCEON {
+        charge_capacitor(row);
         WAIT_CHARGE();
 
-        // Read the ADC value
         sw_value = ec_adc_read(adcMux, false);
     }
 
+#if ALT_SCAN_MODE
     // Discharge peak hold capacitor
     discharge_capacitor();
     WAIT_DISCHARGE();
+#endif
 
     return sw_value;
 }
@@ -204,11 +218,23 @@ bool ecsm_matrix_scan(matrix_row_t current_matrix[]) {
     bool updated = false;
 
     for (int col = 0; col < cols_len; col++) {
+#if !ALT_SCAN_MODE
+        discharge_capacitor();
+        writePinHigh(aplex_en_pin);
+        select_mux(col);
+        writePinLow(aplex_en_pin);
+        WAIT_DISCHARGE();
+#endif
+
         for (int row = 0; row < rows_len; row++) {
             ecsm_sw_value[row][col] = ecsm_readkey_raw(row, col);
             updated |= ecsm_update_key(&current_matrix[row], row, col, ecsm_sw_value[row][col]);
         }
     }
+
+#if !ALT_SCAN_MODE
+    discharge_capacitor();
+#endif
 
     return updated;
 }
