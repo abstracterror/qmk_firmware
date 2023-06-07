@@ -28,5 +28,3 @@
 
 #define SPLIT_HAND_PIN B3
 #define SERIAL_USART_TX_PIN D3
-
-#define SERIAL_DEBUG
