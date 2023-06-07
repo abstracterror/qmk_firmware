@@ -171,11 +171,10 @@ uint16_t ecsm_readkey_raw(uint8_t row, uint8_t col) {
 
     // Set strobe pins to low state
     writePinLow(row_pins[row]);
-
 #else
     discharge_capacitor();
-    clear_all_row_pins();
     WAIT_DISCHARGE();
+    clear_all_row_pins();
 #endif
 
     ATOMIC_BLOCK_FORCEON {

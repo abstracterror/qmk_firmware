@@ -283,11 +283,7 @@ static inline void manageAdcInitializationDriver(uint8_t adc, ADCDriver* adcDriv
     }
 }
 
-msg_t adcConvertNoLock(ADCDriver *adcp,
-                 const ADCConversionGroup *grpp,
-                 adcsample_t *samples,
-                 size_t depth,
-                 bool lock) {
+msg_t adcConvertNoLock(ADCDriver* adcp, const ADCConversionGroup* grpp, adcsample_t* samples, size_t depth, bool lock) {
     msg_t msg;
 
     if (lock) {

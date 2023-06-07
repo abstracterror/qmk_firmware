@@ -29,14 +29,14 @@ void matrix_init_custom(void) {
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {
     bool updated = ecsm_matrix_scan(current_matrix);
 
-    // RAW matrix values on console
-    #ifdef CONSOLE_ENABLE
-        static int cnt = 0;
-        if (cnt++ == 300) {
-            cnt = 0;
-            ecsm_print_matrix();
-        }
-    #endif
+// RAW matrix values on console
+#ifdef CONSOLE_ENABLE
+    static int cnt = 0;
+    if (cnt++ == 300) {
+        cnt = 0;
+        ecsm_print_matrix();
+    }
+#endif
 
     return updated;
 }

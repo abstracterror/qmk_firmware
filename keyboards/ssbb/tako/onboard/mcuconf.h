@@ -25,6 +25,6 @@
 #define STM32_SERIAL_USE_USART1 TRUE
 
 #ifdef OLED_ENABLE
-    #undef STM32_I2C_USE_I2C1
-    #define STM32_I2C_USE_I2C1 TRUE
+#    undef STM32_I2C_USE_I2C1
+#    define STM32_I2C_USE_I2C1 TRUE
 #endif

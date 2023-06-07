@@ -20,8 +20,8 @@
 #define HAL_USE_SERIAL TRUE
 
 #ifdef OLED_ENABLE
-    #undef HAL_USE_I2C
-    #define HAL_USE_I2C TRUE
+#    undef HAL_USE_I2C
+#    define HAL_USE_I2C TRUE
 #endif
 
 #include_next <halconf.h>
