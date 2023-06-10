@@ -18,14 +18,14 @@
 #include "split_common/split_util.h"
 #include "../ec_switch_matrix.h"
 
-uint16_t low_threshold[MATRIX_ROWS][MATRIX_COLS] = EC_LOW_THRESHOLD_LEFT;
-uint16_t high_threshold[MATRIX_ROWS][MATRIX_COLS] = EC_HIGH_THRESHOLD_RIGHT;
+uint16_t low_threshold[MATRIX_ROWS][MATRIX_COLS]  = EC_LOW_THRESHOLD_LEFT;
+uint16_t high_threshold[MATRIX_ROWS][MATRIX_COLS] = EC_HIGH_THRESHOLD_LEFT;
 
 void matrix_init_custom(void) {
     ecsm_config_t ecsm_config;
 
     if (!isLeftHand) {
-        const uint16_t low_right[MATRIX_ROWS][MATRIX_COLS] = EC_LOW_THRESHOLD_RIGHT;
+        const uint16_t low_right[MATRIX_ROWS][MATRIX_COLS]  = EC_LOW_THRESHOLD_RIGHT;
         const uint16_t high_right[MATRIX_ROWS][MATRIX_COLS] = EC_HIGH_THRESHOLD_RIGHT;
 
         for (uint8_t row = 0; row < MATRIX_ROWS; row++) {
