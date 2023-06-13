@@ -1,3 +1,6 @@
+// Tako can apparently use VBUS detection.
+#undef SPLIT_USB_DETECT
+
 #define RETRO_TAPPING
 #define COMBO_TERM 60
 
