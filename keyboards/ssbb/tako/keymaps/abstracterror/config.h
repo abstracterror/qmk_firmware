@@ -1,6 +1,9 @@
 // Tako can apparently use VBUS detection.
 #undef SPLIT_USB_DETECT
 
+// Workaround Windows RDP weirdness
+#define DOUBLE_REPORT
+
 #define RETRO_TAPPING
 #define COMBO_TERM 60
 
