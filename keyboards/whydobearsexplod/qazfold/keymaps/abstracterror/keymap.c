@@ -18,7 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "os_detection.h"
 #include "g/keymap_combo.h"
 #include "keymap_extras/keymap_uk.h"
-#include "tap_hold.h"
 
 #define TAB_NUM LT(_NUM, KC_TAB)
 #define SPC_SYM LT(_SYM, KC_SPC)
@@ -55,6 +54,18 @@ enum tap_dances {
     TD_J_CMD,
     TD_HASH_FN
 };
+
+typedef struct {
+    uint16_t tap;
+    uint16_t hold;
+    uint16_t held;
+} tap_dance_tap_hold_t;
+
+void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data);
+void tap_dance_tap_hold_reset(tap_dance_state_t *state, void *user_data);
+
+#define ACTION_TAP_DANCE_TAP_HOLD(tap, hold) \
+    { .fn = {NULL, tap_dance_tap_hold_finished, tap_dance_tap_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
 
 tap_dance_action_t tap_dance_actions[] = {
     [TD_F_CMD] = ACTION_TAP_DANCE_TAP_HOLD(UK_F, CMD),
