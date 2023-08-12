@@ -1,0 +1,7 @@
+COMBO_ENABLE = yes
+TAP_DANCE_ENABLE = yes
+DYNAMIC_MACRO_ENABLE = yes
+OS_DETECTION_ENABLE = yes
+KEY_OVERRIDE_ENABLE = yes
+VPATH += keyboards/gboards
+SRC += tap_hold.c
