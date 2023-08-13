@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define SCN_CTL TD(TD_SCLN_CTL)
 #define Z_SFT   LSFT_T(UK_Z)
 #define DOT_SFT RSFT_T(UK_DOT)
-#define HASH_FN TD(TD_HASH_FN)
+#define HASH_FN LT(_FUN, UK_HASH)
 #define NOHOLDS MO(_NOH)
 
 enum layers {
@@ -57,7 +57,6 @@ enum tap_dances {
     TD_F_CMD,
     TD_J_CMD,
     TD_SCLN_CTL,
-    TD_HASH_FN
 };
 
 typedef struct {
@@ -77,7 +76,6 @@ tap_dance_action_t tap_dance_actions[] = {
     [TD_F_CMD] = ACTION_TAP_DANCE_TAP_HOLD(UK_F, CMD),
     [TD_J_CMD] = ACTION_TAP_DANCE_TAP_HOLD(UK_J, CMD),
     [TD_SCLN_CTL] = ACTION_TAP_DANCE_TAP_HOLD(UK_SCLN, CTL),
-    [TD_HASH_FN] = ACTION_TAP_DANCE_TAP_HOLD(UK_HASH, FUN)
 };
 
 /* Key overrides (https://docs.qmk.fm/#/feature_key_overrides)
@@ -141,10 +139,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_FUN] = LAYOUT_split_space(
         _______, _______,                                              _______, _______,
 
-        _______, _______, _______, _______, _______, _______, KC_F4,   KC_F5,   KC_F6,   _______,
+        _______, _______, _______, _______, _______, _______, KC_F4,   KC_F5,   KC_F6,   KC_F11,
         _______, _______, _______, _______, _______, _______, KC_F1,   KC_F2,   KC_F3,   KC_F12,
         _______, _______, _______, _______, _______, _______, KC_F7,   KC_F8,   KC_F9,
-        _______, _______, _______,     KC_F11,          KC_F10,        _______, _______, _______
+        _______, _______, _______,     _______,         KC_F10,        _______, _______, _______
     ),
 
 };
@@ -228,7 +226,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case SCN_CTL:
     case F_CMD:
     case J_CMD:
-    case HASH_FN:
         action = &tap_dance_actions[TD_INDEX(keycode)];
         if (!record->event.pressed && action->state.count && !action->state.finished) {
             tap_dance_tap_hold_t *tap_hold = (tap_dance_tap_hold_t *)action->user_data;
