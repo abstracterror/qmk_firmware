@@ -21,12 +21,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define TAB_NUM LT(_NUM, KC_TAB)
 #define SPC_SYM LT(_SYM, KC_SPC)
-#define A_CTL   LCTL_T(UK_A)
+#define A_CTL   TD(TD_A_CTL)
 #define S_SFT   LSFT_T(UK_S)
+#define D_ALT   LALT_T(UK_D)
 #define F_CMD   TD(TD_F_CMD)
 #define J_CMD   TD(TD_J_CMD)
+#define K_ALT   LALT_T(UK_K)
 #define L_SFT   RSFT_T(UK_L)
-#define SCN_CTL RCTL_T(UK_SCLN)
+#define SCN_CTL TD(TD_SCLN_CTL)
 #define Z_SFT   LSFT_T(UK_Z)
 #define DOT_SFT RSFT_T(UK_DOT)
 #define HASH_FN TD(TD_HASH_FN)
@@ -41,7 +43,8 @@ enum layers {
 };
 
 enum custom_keycodes {
-    CMD = SAFE_RANGE,
+    CTL = SAFE_RANGE,
+    CMD,
     LALT,
     LGUI,
     RALT,
@@ -50,8 +53,10 @@ enum custom_keycodes {
 };
 
 enum tap_dances {
+    TD_A_CTL,
     TD_F_CMD,
     TD_J_CMD,
+    TD_SCLN_CTL,
     TD_HASH_FN
 };
 
@@ -68,8 +73,10 @@ void tap_dance_tap_hold_reset(tap_dance_state_t *state, void *user_data);
     { .fn = {NULL, tap_dance_tap_hold_finished, tap_dance_tap_hold_reset}, .user_data = (void *)&((tap_dance_tap_hold_t){tap, hold, 0}), }
 
 tap_dance_action_t tap_dance_actions[] = {
+    [TD_A_CTL] = ACTION_TAP_DANCE_TAP_HOLD(UK_A, CTL),
     [TD_F_CMD] = ACTION_TAP_DANCE_TAP_HOLD(UK_F, CMD),
     [TD_J_CMD] = ACTION_TAP_DANCE_TAP_HOLD(UK_J, CMD),
+    [TD_SCLN_CTL] = ACTION_TAP_DANCE_TAP_HOLD(UK_SCLN, CTL),
     [TD_HASH_FN] = ACTION_TAP_DANCE_TAP_HOLD(UK_HASH, FUN)
 };
 
@@ -99,7 +106,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_ESC,  KC_F12,                                               NOHOLDS, XXXXXXX,
 
         UK_Q,    UK_W,    UK_E,    UK_R,    UK_T,    UK_Y,    UK_U,    UK_I,    UK_O,    UK_P,
-        A_CTL,   S_SFT,   UK_D,    F_CMD,   UK_G,    UK_H,    J_CMD,   UK_K,    L_SFT,   SCN_CTL,
+        A_CTL,   S_SFT,   D_ALT,   F_CMD,   UK_G,    UK_H,    J_CMD,   K_ALT,   L_SFT,   SCN_CTL,
         Z_SFT,   UK_X,    UK_C,    UK_V,    UK_B,    UK_N,    UK_M,    UK_COMM, DOT_SFT,
         KC_LCTL, LALT,    LGUI,        TAB_NUM,        SPC_SYM,        RGUI,    RALT,    KC_RCTL
     ),
@@ -157,6 +164,9 @@ bool process_os_dependent_key(uint16_t keycode, bool pressed) {
     }
 
     switch (keycode) {
+    case CTL:
+        code = apple ? KC_LCTL : KC_LGUI;
+        break;
     case CMD:
         code = apple ? KC_LGUI : KC_LCTL;
         break;
@@ -187,6 +197,7 @@ bool process_os_dependent_key(uint16_t keycode, bool pressed) {
 
 bool process_custom_keycode(uint16_t keycode, bool pressed) {
     switch (keycode) {
+    case CTL:
     case CMD:
     case LALT:
     case LGUI:
@@ -213,6 +224,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
 
     switch (keycode) {
+    case A_CTL:
+    case SCN_CTL:
     case F_CMD:
     case J_CMD:
     case HASH_FN:
@@ -233,11 +246,7 @@ void tap_dance_tap_hold_finished(tap_dance_state_t *state, void *user_data) {
     uint16_t code;
 
     if (state->pressed) {
-        if (state->count == 1
-#ifndef PERMISSIVE_HOLD
-            && !state->interrupted
-#endif
-        ) {
+        if (state->count == 1) {
             code = tap_hold->hold;
         } else {
             code = tap_hold->tap;
