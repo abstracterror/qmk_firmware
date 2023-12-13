@@ -48,9 +48,7 @@ typedef union {
 extern cocot_config_t cocot_config;
 
 enum cocot_keycodes {
-
-    COCOT_SAFE_RANGE = SAFE_RANGE,
-    CPI_SW,
+    CPI_SW = QK_KB,
     SCRL_SW,
     ROT_R15,
     ROT_L15,
