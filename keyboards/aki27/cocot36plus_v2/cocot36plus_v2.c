@@ -206,52 +206,6 @@ bool process_record_kb(uint16_t keycode, keyrecord_t* record) {
     return true;
 }
 
-layer_state_t layer_state_set_kb(layer_state_t state) {
-    switch(get_highest_layer(state)){
-        case 1 ... 2:
-            //rgblight_sethsv_range(HSV_YELLOW, 0, 9);
-            cocot_set_scroll_mode(true);
-            break;
-        case 3 ... 7:
-            //rgblight_sethsv_range(HSV_CYAN, 0, 9);
-            cocot_set_scroll_mode(false);
-            //set_auto_mouse_enable(true);
-            break;
-        default:
-            //rgblight_sethsv_range(HSV_RED, 0, 9);
-            cocot_set_scroll_mode(false);
-            //set_auto_mouse_enable(true);
-            break;
-        }
-    //rgblight_set_effect_range( 9, 36);
-  return state;
-};
-/*
-layer_state_t layer_state_set_kb(layer_state_t state) {
-    switch(get_highest_layer(remove_auto_mouse_layer(state, true))) {
-        case 1 ... 2:
-            //rgblight_sethsv_range(HSV_YELLOW, 0, 9);
-            cocot_set_scroll_mode(true);
-            state = remove_auto_mouse_layer(state, false);
-            set_auto_mouse_enable(false);
-            break;
-        case 3 ... 7:
-            //rgblight_sethsv_range(HSV_CYAN, 0, 9);
-            cocot_set_scroll_mode(false);
-            //set_auto_mouse_enable(true);
-            break;
-        default:
-            //rgblight_sethsv_range(HSV_RED, 0, 9);
-            cocot_set_scroll_mode(false);
-            //set_auto_mouse_enable(true);
-            set_auto_mouse_enable(cocot_config.auto_mouse);
-            break;
-        }
-    //rgblight_set_effect_range( 9, 36);
-  return state;
-};
-*/
-
 
 void eeconfig_init_kb(void) {
     cocot_config.cpi_idx = COCOT_CPI_DEFAULT;
