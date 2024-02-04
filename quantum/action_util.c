@@ -315,8 +315,8 @@ void send_nkro_report(void) {
     }
 
 #ifdef DOUBLE_REPORT
-    memcpy(keyboard_report, &last_report, sizeof(report_nkro_t));
-    host_nkro_send(keyboard_report);
+    memcpy(nkro_report, &last_report, sizeof(report_nkro_t));
+    host_nkro_send(nkro_report);
 #endif
 }
 #endif
