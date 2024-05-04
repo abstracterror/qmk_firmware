@@ -24,9 +24,9 @@
     },
 
     "ws2812": {
-    "pin": "GP16",
-    "driver": "vendor"
-},
+        "pin": "GP16",
+        "driver": "vendor"
+    },
     "processor": "RP2040",
     "qmk": {
         "tap_keycode_delay": 10

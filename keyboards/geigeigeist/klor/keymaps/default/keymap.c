@@ -19,7 +19,6 @@
 #include QMK_KEYBOARD_H
 #include <stdio.h>
 #include <string.h>
-#include "klor.h"
 #ifdef HAPTIC_ENABLE
 #include "drivers/haptic/drv2605l.h"
 #endif //HAPTIC ENABLE

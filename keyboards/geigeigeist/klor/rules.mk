@@ -1,5 +1,6 @@
 # MCU name
 MCU = atmega32u4
+PIN_COMPATIBLE = promicro
 
 # Bootloader selection
 BOOTLOADER = atmel-dfu
