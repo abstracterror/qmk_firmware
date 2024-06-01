@@ -12,24 +12,42 @@
     "bootloader": "stm32-dfu",
     "diode_direction": "ROW2COL",
     "matrix_pins": {
-        "cols": [ "B11", "B12", "B13", "B14", "B15", "C13", "C14", "C15", "F0", "F1" ],
+        "cols": ["B11", "B12", "B13", "B14", "B15", "C13", "C14", "C15", "F0", "F1"],
         "rows": ["A8", "B10", "B2", "B1"]
     },
     "encoder": {
-      "rotary": [
-        {"pin_a": "B4", "pin_b": "B5", "resolution": 2}
-      ]
+        "rotary": [
+            {"pin_a": "B4", "pin_b": "B5", "resolution": 2}
+        ]
     },
     "features": {
         "console": true,
         "encoder": true,
         "extrakey": true,
         "mousekey": true,
-        "nkro": true
+        "nkro": true,
+        "rgb_matrix": true
     },
     "bootmagic": {
         "enabled": true,
         "matrix": [0, 0]
+    },
+    "rgb_matrix": {
+        "default": {
+            "hue": 0,
+            "sat": 255,
+            "speed": 32,
+            "val": 32
+        },
+        "driver": "ws2812",
+        "hue_steps": 4,
+        "max_brightness": 55,
+        "sat_steps": 4,
+        "speed_steps": 16,
+        "val_steps": 4
+    },
+    "ws2812": {
+        "pin": "A15"
     },
     "layouts": {
         "LAYOUT_no_knob": {
