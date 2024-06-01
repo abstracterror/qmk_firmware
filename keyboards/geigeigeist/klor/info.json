@@ -8,6 +8,27 @@
         "pid": "0x0001",
         "device_version": "1.3.0"
     },
+    "features": {
+        "audio": false,
+        "encoder": true,
+        "mousekey": false,
+        "oled": true
+    },
+    "diode_direction": "COL2ROW",
+    "pin_compatible": "promicro",
+    "rgb_matrix": {
+        "driver": "ws2812"
+    },
+    "haptic": {
+        "driver": "drv2605l"
+    },
+    "rgblight": {
+        "split_count": [21, 21]
+    },
+    "split": {
+        "enabled": true,
+        "soft_serial_pin": "D2"
+    },
     "layout_aliases": {
         "LAYOUT": "LAYOUT_polydactyl"
     },

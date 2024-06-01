@@ -1,0 +1,14 @@
+{
+    "audio": {
+        "driver": "pwm_hardware"
+    },
+    "bootloader": "rp2040",
+    "features": {
+        "audio": true
+    },
+    "processor": "RP2040",
+    "ws2812": {
+        "driver": "vendor",
+        "pin": "D3"
+    }
+}
