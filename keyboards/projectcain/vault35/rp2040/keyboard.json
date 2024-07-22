@@ -18,6 +18,9 @@
         "rows": ["GP7", "GP1", "GP23", "GP22"]
     },
     "processor": "RP2040",
+    "qmk": {
+        "tap_keycode_delay": 10
+    },
     "rgblight": {
         "led_count": 62,
         "animations": {
