@@ -6,10 +6,20 @@
     "processor": "STM32F401",
     "bootloader": "stm32-dfu",
     "board": "GENERIC_STM32_F401XC",
+    "bootmagic": {
+        "enabled": true
+    },
+    "diode_direction": "COL2ROW",
+    "mouse_key": {
+        "enabled": true
+    },
     "usb": {
         "vid": "0x6369",
         "pid": "0x6B84",
-        "device_version": "0.0.1"
+        "device_version": "0.0.1",
+        "shared_endpoint": {
+            "keyboard": true
+        }
     },
     "layouts": {
         "LAYOUT": {
