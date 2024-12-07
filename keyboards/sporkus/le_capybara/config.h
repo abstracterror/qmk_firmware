@@ -70,8 +70,6 @@
 
 
 // --- RGB stuff ---
-#define ENCODER_MAP_ENABLE
-
 #define RGB_MATRIX_LED_COUNT 11
 #define DRIVER_LED_TOTAL RGB_MATRIX_LED_COUNT
 
