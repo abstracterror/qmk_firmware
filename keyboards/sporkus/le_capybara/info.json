@@ -15,7 +15,8 @@
         "encoder": true,
         "extrakey": true,
         "mousekey": true,
-        "nkro": true
+        "nkro": true,
+        "rgb_matrix": true
     },
     "bootmagic": {
         "enabled": true,
@@ -25,6 +26,23 @@
       "rotary": [
         {"pin_a": "B4", "pin_b": "B5", "resolution": 2}
       ]
+    },
+    "rgb_matrix": {
+        "default": {
+            "hue": 0,
+            "sat": 255,
+            "speed": 32,
+            "val": 32
+        },
+        "driver": "ws2812",
+        "hue_steps": 4,
+        "max_brightness": 255,
+        "sat_steps": 4,
+        "speed_steps": 16,
+        "val_steps": 4
+    },
+   "ws2812": {
+        "pin": "A15"
     },
     "layouts": {
         "LAYOUT_no_knob": {
