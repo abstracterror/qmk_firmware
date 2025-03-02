@@ -25,6 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MS_BTN3 KC_MS_BTN3
 
 
+
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
     [0] = LAYOUT(
@@ -52,7 +53,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                           KC_LALT, KC_LNG2, KC_SPC,           KC_ENT,  KC_LNG1, KC_BSPC
     ),
     [4] = LAYOUT(
-        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          MS_BTN3, MS_BTN2, XXXXXXX, XXXXXXX, XXXXXXX,
+        EE_CLR,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          MS_BTN3, MS_BTN2, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
         XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,          XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
                           XXXXXXX, XXXXXXX, XXXXXXX,          MS_BTN1, SCRL_MO, XXXXXXX
@@ -90,6 +91,7 @@ const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][2] = {
 #endif
 
 
+
 bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
     switch(keycode) {
       case KC_LCTL:
@@ -105,46 +107,6 @@ bool is_mouse_record_kb(uint16_t keycode, keyrecord_t* record) {
 }
 
 
-/*
-layer_state_t layer_state_set_user(layer_state_t state) {
-    switch (get_highest_layer(state)) {
-    case 1:
-        //rgblight_sethsv_range(HSV_YELLOW, 0, 9);
-        cocot_set_scroll_mode(true);
-        break;
-    case 2:
-        //rgblight_sethsv_range(HSV_GREEN, 0, 9);
-        cocot_set_scroll_mode(true);
-        break;
-    case 3:
-        //rgblight_sethsv_range(HSV_CYAN, 0, 9);
-        cocot_set_scroll_mode(false);
-        break;
-    case 4:
-        //rgblight_sethsv_range(HSV_AZURE, 0, 9);
-        cocot_set_scroll_mode(false);
-        break;
-    case 5:
-        //rgblight_sethsv_range(HSV_BLUE, 0, 9);
-        cocot_set_scroll_mode(false);
-        break;
-    case 6:
-        //rgblight_sethsv_range(HSV_MAGENTA, 0, 9);
-        cocot_set_scroll_mode(false);
-        break;
-    case 7:
-        //rgblight_sethsv_range(HSV_MAGENTA, 0, 9);
-        cocot_set_scroll_mode(false);
-        break;
-    default:
-        //rgblight_sethsv_range(HSV_RED, 0, 9);
-        cocot_set_scroll_mode(false);
-        break;
-    }
-    //rgblight_set_effect_range( 9, 36);
-  return state;
-};
-*/
 
 #ifdef RGB_MATRIX_ENABLE
 
@@ -179,9 +141,4 @@ bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
 };
 
 #endif
-
-
-
-
-
 

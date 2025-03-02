@@ -1,6 +1,6 @@
 {
+    "keyboard_name": "cocot36plus",
     "manufacturer": "aki27",
-    "keyboard_name": "cocot36plus_v2",
     "maintainer": "aki27",
     "url": "",
     "usb": {
@@ -10,12 +10,12 @@
     },
     "diode_direction": "COL2ROW",
     "matrix_pins":{
-        "cols": ["GP24", "GP23", "GP22", "GP21", "GP20", "GP13", "GP12", "GP11", "GP10", "GP9"],
-        "rows": ["GP18", "GP17", "GP16", "GP15"]
+        "cols": ["GP25", "GP24", "GP23", "GP22", "GP21", "GP15", "GP14", "GP13", "GP12", "GP11"],
+        "rows": ["GP20", "GP19", "GP18", "GP17"]
     },
     "encoder": {
         "rotary": [
-            {"pin_a": "GP29", "pin_b": "GP28", "resolution": 2}
+            {"pin_a": "GP28", "pin_b": "GP29", "resolution": 2}
         ]
     },
     "layouts": {
