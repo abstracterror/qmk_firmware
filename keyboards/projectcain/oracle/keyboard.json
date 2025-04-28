@@ -106,13 +106,14 @@
         "hue_steps": 4,
         "max_brightness": 255,
         "sat_steps": 4,
-        "val_steps": 4
- },
+        "val_steps": 4,
+        "sleep": true
+    },
 
     "ws2812": {
-    "pin": "GP16",
-    "driver": "vendor"
-},
+        "pin": "GP16",
+        "driver": "vendor"
+    },
     "processor": "RP2040",
     "qmk": {
         "tap_keycode_delay": 10
