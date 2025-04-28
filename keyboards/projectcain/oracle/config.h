@@ -32,5 +32,3 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGB_MATRIX_DEFAULT_MODE RGB_MATRIX_CYCLE_ALL
 #define RGB_MATRIX_DEFAULT_VAL 32
 #define RGB_MATRIX_DEFAULT_SPD 32
-
-#define RGB_DISABLE_WHEN_USB_SUSPENDED
