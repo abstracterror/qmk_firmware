@@ -27,7 +27,7 @@
 #define EC_MATRIX            // allows ec code to be enabled with ifdef
 
 // enables tuning ec config every power cycle, disable to reduce write cycle to flash
-#define ECSM_TUNE_ON_BOOT
+//#define ECSM_TUNE_ON_BOOT
 
 // --- Misc ---
 #define DEBUG_MATRIX_SCAN_RATE
