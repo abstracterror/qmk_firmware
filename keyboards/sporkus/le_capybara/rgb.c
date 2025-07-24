@@ -1,3 +1,5 @@
+#include "quantum.h"
+
 #ifdef RGB_MATRIX_ENABLE
 // LED index
 // 9    10    2    3
