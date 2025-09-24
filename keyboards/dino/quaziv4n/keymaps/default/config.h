@@ -1,8 +1,5 @@
 #pragma once
 
-#define BOOTMAGIC_ROW 0
-#define BOOTMAGIC_COLUMN 1
-
 #define TAPPING_TERM 110
 #define COMBO_TERM 27
 #define PERMISSIVE_HOLD
@@ -17,9 +14,3 @@
 #define COMBO_SHOULD_TRIGGER
 
 #define ENABLE_COMPILE_KEYCODE
-
-#define NUM_ENCODERS 1
-#define NUM_DIRECTIONS 2
-#define ENCODER_A_PINS  { GP0 }
-#define ENCODER_B_PINS  { GP10 }
-#define ENCODER_RESOLUTION 2
