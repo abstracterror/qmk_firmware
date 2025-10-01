@@ -8,16 +8,16 @@
 #define INACTIVE_H (20)
 #define ACTIVE_H (160)
 
-void keyboard_post_init_kb(void) 
-{
+void keyboard_post_init_kb(void) {
     rgblight_set_effect_range(3,18);
     rgblight_sethsv_range(INACTIVE_H, 200,20, 0, 3);
+    keyboard_post_init_user();
 }
 
 bool led_update_kb(led_t led_state) {
     bool res = led_update_user(led_state);
     if(res) {
-        if (!led_state.num_lock) {rgblight_sethsv_at(ACTIVE_H,200,20,1); }
+        if (!led_state.num_lock) {rgblight_sethsv_at(ACTIVE_H,200,20,2); }
         else                     {rgblight_sethsv_at(INACTIVE_H,200,20,2); }
 
         if (led_state.caps_lock) {rgblight_sethsv_at(ACTIVE_H,200,20,1); }
