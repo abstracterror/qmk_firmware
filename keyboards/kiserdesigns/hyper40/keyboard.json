@@ -155,19 +155,19 @@
                 { "matrix": [5, 5],  "x": 17.25, "y": 4, "w": 1,    "label": "TOP" },
                 { "matrix": [5, 6],  "x": 18.25, "y": 4, "w": 1,    "label": "REPEAT" },
 
-                { "matrix": [6, 0],  "x": 0,     "y": 4, "w": 1,    "label": "MODE LOCK" },
-                { "matrix": [6, 1],  "x": 1,     "y": 4, "w": 1,    "label": "SYS" },
-                { "matrix": [6, 2],  "x": 2,     "y": 4, "w": 1,    "label": "HYPER" },
-                { "matrix": [6, 3],  "x": 3.25,  "y": 4, "w": 1.25, "label": "SUPER" },
-                { "matrix": [6, 4],  "x": 4.5,   "y": 4, "w": 1,    "label": "META" },
-                { "matrix": [6, 5],  "x": 5.5,   "y": 4, "w": 1.25, "label": "CTRL" },
-                { "matrix": [6, 8],  "x": 6.75,  "y": 4, "w": 6.25, "label": " " },
-                { "matrix": [7, 1],  "x": 13,    "y": 4, "w": 1,    "label": "CTRL" },
-                { "matrix": [7, 2],  "x": 14,    "y": 4, "w": 1,    "label": "META" },
-                { "matrix": [7, 3],  "x": 15,    "y": 4, "w": 1,    "label": "SUPER" },
-                { "matrix": [7, 4],  "x": 16.25, "y": 4, "w": 1,    "label": "HYPER" },
-                { "matrix": [7, 5],  "x": 17.25, "y": 4, "w": 1,    "label": "LINE" },
-                { "matrix": [7, 6],  "x": 18.25, "y": 4, "w": 1,    "label": "HELP" }
+                { "matrix": [6, 0],  "x": 0,     "y": 5, "w": 1,    "label": "MODE LOCK" },
+                { "matrix": [6, 1],  "x": 1,     "y": 5, "w": 1,    "label": "SYS" },
+                { "matrix": [6, 2],  "x": 2,     "y": 5, "w": 1,    "label": "HYPER" },
+                { "matrix": [6, 3],  "x": 3.25,  "y": 5, "w": 1.25, "label": "SUPER" },
+                { "matrix": [6, 4],  "x": 4.5,   "y": 5, "w": 1,    "label": "META" },
+                { "matrix": [6, 5],  "x": 5.5,   "y": 5, "w": 1.25, "label": "CTRL" },
+                { "matrix": [6, 8],  "x": 6.75,  "y": 5, "w": 6.25, "label": " " },
+                { "matrix": [7, 1],  "x": 13,    "y": 5, "w": 1,    "label": "CTRL" },
+                { "matrix": [7, 2],  "x": 14,    "y": 5, "w": 1,    "label": "META" },
+                { "matrix": [7, 3],  "x": 15,    "y": 5, "w": 1,    "label": "SUPER" },
+                { "matrix": [7, 4],  "x": 16.25, "y": 5, "w": 1,    "label": "HYPER" },
+                { "matrix": [7, 5],  "x": 17.25, "y": 5, "w": 1,    "label": "LINE" },
+                { "matrix": [7, 6],  "x": 18.25, "y": 5, "w": 1,    "label": "HELP" }
             ]
         }
     }
