@@ -1,10 +1,6 @@
 /* SPDX-License-Identifier: GPL-2.0-or-later */
-
-#include "hyper40.h"
-
-void matrix_init_kb(void) {
-	matrix_init_user();
-}
+#include QMK_KEYBOARD_H
+#include "quantum.h"
 
 led_config_t g_led_config = { {
 
