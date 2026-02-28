@@ -20,3 +20,9 @@ led_config_t g_led_config = {
     }
 };
 #endif
+
+void keyboard_pre_init_kb() {
+    ws2812_init();
+    ws2812_set_color_all(0, 0, 0);
+    ws2812_flush();
+}
