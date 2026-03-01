@@ -6,8 +6,8 @@ led_config_t g_led_config = {
         // Key Matrix to LED Index
         {     8,      9,     10,     11,     11,     12,     12,     13,     14,     15},
         {     8,      9,     10,     11,     11,     12,     12,     13,     14,     15},
-        {     7,      6,      5,      4,      4,      3,      2,      1, NO_LED, 0     },
-        {     7, NO_LED,      5,      4, NO_LED,      3,      2, NO_LED, 0,      NO_LED}
+        {     7,      6,      5,      4,      4,      3,      2,      1, NO_LED,      0},
+        {     7, NO_LED,      5,      4, NO_LED,      3,      2, NO_LED,      0, NO_LED}
     }, {
         // LED Index to Physical Position
         {202, 45}, {179, 45}, {157, 45}, {134, 45}, {90, 45}, {67, 45}, {45, 45}, {22, 45}, // UNDERGLOW
@@ -23,6 +23,5 @@ led_config_t g_led_config = {
 
 void keyboard_pre_init_kb() {
     ws2812_init();
-    ws2812_set_color_all(0, 0, 0);
     ws2812_flush();
 }
