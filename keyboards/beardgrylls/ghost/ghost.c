@@ -4,10 +4,10 @@
 led_config_t g_led_config = {
     {
         // Key Matrix to LED Index
-        {NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED},
-        {NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED},
-        {NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED},
-        {NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED, NO_LED}
+        {     8,      9,     10,     11,     11,     12,     12,     13,     14,     15},
+        {     8,      9,     10,     11,     11,     12,     12,     13,     14,     15},
+        {     7,      6,      5,      4,      4,      3,      2,      1, NO_LED, 0     },
+        {     7, NO_LED,      5,      4, NO_LED,      3,      2, NO_LED, 0,      NO_LED}
     }, {
         // LED Index to Physical Position
         {202, 45}, {179, 45}, {157, 45}, {134, 45}, {90, 45}, {67, 45}, {45, 45}, {22, 45}, // UNDERGLOW
