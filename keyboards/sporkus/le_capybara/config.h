@@ -17,12 +17,12 @@
 #pragma once
 
 // --- EC matrix user configuration ---
-// Actuation/release threshold = idle + offset
-// Larger offset = More key travel distance, less sensitive
-// Sensitivity can be adjusted using keycode: EC_AP_I/EC_AP_D
-#define ACTUATION_OFFSET 150
-#define RELEASE_OFFSET 170
-#define DEFAULT_IDLE 500      // default value before tuning is completed
+#define ACTUATION_DEPTH 60         // 60% of travel depth
+#define RELEASE_DEPTH 50           // 50% of travel depth 
+#define CALIBRATION_MIN_TRAVEL 10  // minimum travel as % of expected travel to count a key as bottomed
+#define DEFAULT_IDLE 300           // default idle ADC before tuning completes
+#define DEFAULT_BOTTOM_ADC 950     // assumed bottom ADC reading before bottoming calibration
+#define TRAVEL_CURVE_GAMMA 2.0f    // power curve for actuation: >1 linearises EC's nonlinear capacitance response; 1.0 = linear
 #define ECSM_DEBUG            // enables printing ec config and ADC readings */
 #define EC_MATRIX            // allows ec code to be enabled with ifdef
 
@@ -63,10 +63,14 @@
 #define EXTRA_SWITCH_PINS {B3}
 
 // --- Persistent Storage config ---
-// Data size is in bytes. uint16_t = 2 bytes
-// data block size needs to be uint16_t array length * 2
-// Two addition words for actuation offsets and one byte for configuration check
-#define EECONFIG_KB_DATA_SIZE ((MATRIX_ROWS * MATRIX_COLS + 2) * 2 + 1)
+// ecsm_config_t layout (bytes):
+//   bool configured (1) + bool bottoming_configured (1)
+//   + int16_t actuation_offset (2) + int16_t release_offset (2)
+//   + int16_t idle[MATRIX_ROWS][MATRIX_COLS] (5*10*2 = 100)
+//   + uint16_t bottoming[EC_MATRIX_ROWS][EC_MATRIX_COLS] (4*10*2 = 80)
+//   = 186 bytes
+// NOTE: changing this requires EE_CLR on first flash
+#define EECONFIG_KB_DATA_SIZE 186
 
 
 // --- RGB stuff ---

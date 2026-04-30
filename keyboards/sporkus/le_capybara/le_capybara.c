@@ -14,6 +14,12 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
             case EC_CLR:
                 ecsm_eeprom_clear();
                 return false;
+            case EC_CAL:
+                ecsm_bottoming_cal_toggle();
+                return false;
+            case EC_TUI:
+                ecsm_tui_toggle();
+                return false;
         }
     }
 
