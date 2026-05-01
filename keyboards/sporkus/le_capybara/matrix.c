@@ -19,11 +19,12 @@
 #include "matrix.h"
 #include "print.h"
 
+#ifdef EXTRA_SWITCHES
 const uint32_t extra_switch_pins[] =  EXTRA_SWITCH_PINS;
 
 void extra_switch_init(void) {
     for (int i = 0; i < EXTRA_SWITCHES; i++) {
-        setPinInputHigh(extra_switch_pins[i]);
+        gpio_set_pin_input_high(extra_switch_pins[i]);
     }
 }
 
@@ -39,7 +40,7 @@ bool extra_switches_scan(matrix_row_t current_matrix[]) {
 
     for (int i = 0; i < EXTRA_SWITCHES; i++) {
         uint8_t mask = 1 << i;
-        curr_row_state |= readPin(extra_switch_pins[i]) ? 0 : mask;
+        curr_row_state |= gpio_read_pin(extra_switch_pins[i]) ? 0 : mask;
     }
 
     if (curr_row_state != prev_row_state) {
@@ -53,6 +54,15 @@ bool extra_switches_scan(matrix_row_t current_matrix[]) {
 bool matrix_scan_custom(matrix_row_t current_matrix[]) {
     bool updated = ecsm_matrix_scan(current_matrix);
     updated |= extra_switches_scan(current_matrix);
+
+#else
+void matrix_init_custom(void) {
+    ecsm_init();
+}
+
+bool matrix_scan_custom(matrix_row_t current_matrix[]) {
+    bool updated = ecsm_matrix_scan(current_matrix);
+#endif
 
 #ifdef CONSOLE_ENABLE
     #ifdef ECSM_DEBUG

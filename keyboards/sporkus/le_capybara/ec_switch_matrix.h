@@ -32,7 +32,7 @@ typedef struct
     bool     bottoming_configured;
     int16_t  actuation_offset;
     int16_t  release_offset;
-    int16_t  idle[MATRIX_ROWS][MATRIX_COLS];
+    int16_t  idle[EC_MATRIX_ROWS][EC_MATRIX_COLS];
     uint16_t bottoming[EC_MATRIX_ROWS][EC_MATRIX_COLS];
 } ecsm_config_t;
 
@@ -65,6 +65,18 @@ void ecsm_eeprom_clear(void);
 void ecsm_bottoming_cal_toggle(void);
 
 bool ecsm_matrix_scan(matrix_row_t current_matrix[]);
+
+// Called from raw_hid_receive_kb when a keepalive packet arrives (just stamps a timer)
+void ec_hid_keepalive(void);
+
+/// @brief Toggle streaming raw ADC for the selected key (graph reading)
+void ecsm_jab_toggle(uint8_t row, uint8_t col);
+
+/// @brief Override bottoming value for a single key and persist to EEPROM
+void ecsm_set_bottom(uint8_t row, uint8_t col, uint16_t value);
+
+/// @brief Override idle value for a single key and persist to EEPROM
+void ecsm_set_idle(uint8_t row, uint8_t col, uint16_t value);
 
 /// Read capacitive sensor raw ADC value
 uint16_t ecsm_readkey_raw(uint8_t row, uint8_t col);
