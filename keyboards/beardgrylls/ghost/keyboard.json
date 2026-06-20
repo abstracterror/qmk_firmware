@@ -16,7 +16,8 @@
 	"driver": "ws2812"
     },
     "ws2812": {
-	"pin": "B8"
+	"pin": "B8",
+        "driver": "pwm"
     },
     "diode_direction": "COL2ROW",
     "matrix_pins": {
