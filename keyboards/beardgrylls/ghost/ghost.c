@@ -20,3 +20,9 @@ led_config_t g_led_config = {
     }
 };
 #endif
+
+void board_init(void) {
+    // prevent initial flash of green
+    gpio_set_pin_output(WS2812_DI_PIN);
+    gpio_write_pin_low(WS2812_DI_PIN);
+}
